@@ -11,20 +11,20 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-public class LoginActivity extends AppCompatActivity {
+public class CadastroActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_cadastro);
 
-        Button cadastrosbtn = findViewById(R.id.cadastrarButton);
+        Button cadastrosbtn = findViewById(R.id.voltarButton);
 
         cadastrosbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(LoginActivity.this, CadastroActivity.class);
+                Intent i = new Intent(CadastroActivity.this, LoginActivity.class);
                 startActivity(i);
             }
         });

@@ -29,6 +29,12 @@
             android:exported="true"
             >
         </activity>
+
+        <activity
+            android:name=".CadastroActivity"
+            android:exported="true"
+            >
+        </activity>
     </application>
 
 </manifest>
