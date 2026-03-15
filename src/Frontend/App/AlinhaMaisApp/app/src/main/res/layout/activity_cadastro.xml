@@ -12,25 +12,29 @@
     android:orientation="vertical"
     android:gravity="center"
 
-    android:background="@drawable/backgroundazul"
+    android:background="@drawable/background_cor"
 
     tools:context=".CadastroActivity"
     >
 
+
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/logo_e_bg"
-        />
-
+        android:layout_marginTop="30dp"
+        android:background="@drawable/logo_e_bg" />
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="30dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginBottom="30dp"
+        android:layout_marginTop="5dp"
+
 
         android:background="@drawable/custom_edit_text"
-        android:backgroundTint="@color/white80"
+        android:backgroundTint="@color/bg80"
 
         app:cardCornerRadius="30dp"
         app:cardElevation="20dp"
@@ -45,14 +49,14 @@
             >
 
             <EditText
-                style="@style/InputC"
+                style="@style/Input"
                 android:id="@+id/nomeEdit"
                 android:background="@drawable/custom_edit_text"
                 android:drawableLeft="@drawable/pessoa"
                 android:hint="Nome"/>
 
             <EditText
-                style="@style/InputC"
+                style="@style/Input"
                 android:id="@+id/emailEdit"
                 android:drawableLeft="@drawable/email"
                 android:hint="Email"
@@ -60,14 +64,14 @@
 
 
             <EditText
-                style="@style/InputC"
+                style="@style/Input"
                 android:id="@+id/senhaEdit"
                 android:drawableLeft="@drawable/chave"
                 android:hint="Senha"
                 android:layout_marginTop="20dp" />
 
             <EditText
-                style="@style/InputC"
+                style="@style/Input"
                 android:id="@+id/repitaSenhaEdit"
                 android:drawableLeft="@drawable/chave"
                 android:hint="Repita sua Senha"
@@ -76,15 +80,15 @@
 
 
             <Button
-                style="@style/ButtonColorC"
+                style="@style/ButtonColor"
                 android:id="@+id/cadastrarButton"
                 android:layout_marginTop="20dp"
-                android:backgroundTint="@color/laranjaEscuro"
+                android:backgroundTint="@color/primariaEscuro"
                 android:text="Cadastrar-se" />
 
             <Button
                 android:id="@+id/voltarButton"
-                style="@style/ButtonLightC"
+                style="@style/ButtonLight"
                 android:layout_width="299dp"
                 android:layout_marginTop="15sp"
                 android:background="#00ffffff"
