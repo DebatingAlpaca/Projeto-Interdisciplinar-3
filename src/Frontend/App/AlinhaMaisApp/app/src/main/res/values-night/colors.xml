@@ -5,13 +5,14 @@
     <color name="bg80">#44484848</color>
     <color name="secundariaClaro">#3EBAD2</color>
     <color name="secundariaEscuro">#086485</color>
-    <color name="cinzaMedio">#E6E6E6</color>
-    <color name="cinzaClaro">#F0F0F0</color>
+    <color name="cinzaMedio">#F0F0F0</color>
+    <color name="fundoSolido">#2B2A2E</color>
     <color name="primariaClaro">#EE715F</color>
     <color name="primariaEscuro">#D9422E</color>
     <color name="Texto">#FFFFFF</color>
     <color name="Hint">#FFFFFF</color>
     <color name="backgroundSplash">#131217</color>
+    <color name="bgTransparente">#44484848</color>
 
 
 </resources>

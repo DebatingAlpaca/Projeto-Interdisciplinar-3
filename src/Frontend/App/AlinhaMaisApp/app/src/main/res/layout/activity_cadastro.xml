@@ -33,7 +33,7 @@
         android:layout_marginTop="5dp"
 
 
-        android:background="@drawable/custom_edit_text"
+        android:background="@drawable/custom_round_square"
         android:backgroundTint="@color/bg80"
 
         app:cardCornerRadius="30dp"
@@ -51,7 +51,7 @@
             <EditText
                 style="@style/Input"
                 android:id="@+id/nomeEdit"
-                android:background="@drawable/custom_edit_text"
+                android:background="@drawable/custom_round_square"
                 android:drawableLeft="@drawable/pessoa"
                 android:hint="Nome"/>
 

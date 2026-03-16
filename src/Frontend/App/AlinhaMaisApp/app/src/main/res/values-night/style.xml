@@ -5,7 +5,7 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:padding">15dp</item>
-        <item name="android:background">@drawable/custom_edit_text</item>
+        <item name="android:background">@drawable/custom_round_square</item>
         <item name="android:fontFamily">@font/roboto_regular</item>
         <item name="android:textSize">20sp</item>
         <item name="android:textColorHint">@color/Hint</item>
@@ -35,5 +35,22 @@
         <item name="android:textAlignment">center</item>
 
     </style>
+
+
+    <style name="Custom_corner_bottom">
+
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSizeBottomLeft">20dp</item>
+        <item name="cornerSizeBottomRight">20dp</item>
+        <item name="cornerSizeTopLeft">0dp</item>
+        <item name="cornerSizeTopRight">0dp</item>
+    </style>
+
+    <style name="Small_ImageView">
+        <item name="android:layout_width">45dp</item>
+        <item name="android:layout_height">45dp</item>
+
+    </style>
+
 
 </resources>

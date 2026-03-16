@@ -7,7 +7,7 @@ import android.os.Handler;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class SplashActivity extends AppCompatActivity {
+public class SplashActivity extends BaseActivity {
 
     public static int TIMER_SPLASH = 3000;
 

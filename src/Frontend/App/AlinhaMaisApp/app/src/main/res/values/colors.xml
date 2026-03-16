@@ -6,11 +6,12 @@
     <color name="primariaClaro">#3EBAD2</color>
     <color name="primariaEscuro">#086485</color>
     <color name="cinzaMedio">#E6E6E6</color>
-    <color name="cinzaClaro">#F0F0F0</color>
+    <color name="fundoSolido">#F0F0F0</color>
     <color name="secundariaClaro">#EE715F</color>
     <color name="secundariaEscuro">#D9422E</color>
     <color name="Texto">#0F194B</color>
     <color name="Hint">#7F0F194B</color>
     <color name="backgroundSplash">#3EBAD2</color>
+    <color name="bgTransparente">#88FFFFFF</color>
 
 </resources>
