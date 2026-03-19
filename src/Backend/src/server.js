@@ -44,6 +44,14 @@ app.get("/health", async (req, res) => {
   res.json({ status: "ok" });
 });
 
+app.get("/", (req, res) => {
+  res.json({
+    status: "online",
+    mensagem: "API Maya RPG funcionando!",
+    versao: "1.0.0",
+  });
+});
+
 async function startServer() {
   await connectDatabase();
   app.listen(PORT, () => {
