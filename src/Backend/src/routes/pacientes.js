@@ -59,12 +59,6 @@ router.get("/:id", async (req, res) => {
       return res.status(404).json({ erro: "Paciente não encontrado" });
     }
 
-    const planos = await db.sql`
-      SELECT id_plano, data_inicio, data_final,
-             frequencia, repeticoes, series, observacoes
-      FROM Plano_Exercicios WHERE id_paciente = ${id}
-    `;
-
     const execucoes = await db.sql`
       SELECT id_execucao, data_execucao, dor_nivel, observacoes, concluido
       FROM Registro_Execucao
@@ -86,12 +80,20 @@ router.get("/:id", async (req, res) => {
       ORDER BY data_consulta ASC
     `;
 
+    const lembretes = await db.sql`
+      SELECT l.id_lembrete, l.titulo, l.intervalo_minutos,
+             l.horario_inicio, l.horario_fim, lp.ativo
+      FROM Lembrete_Paciente lp
+      JOIN Lembrete l ON lp.id_lembrete = l.id_lembrete
+      WHERE lp.id_paciente = ${id}
+    `;
+
     res.json({
       ...paciente[0],
-      planos,
       ultimas_execucoes: execucoes,
       sessoes,
       consultas,
+      lembretes,
     });
   } catch (error) {
     res.status(500).json({ erro: error.message });
