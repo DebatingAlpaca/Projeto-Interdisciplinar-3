@@ -186,7 +186,7 @@ router.put("/:id", async (req, res) => {
       SET telefone = ${telefone},
           data_nascimento = ${data_nascimento},
           observacoes = ${observacoes},
-          status_tratamento = ${status_tratamento},
+          status_tratamento = COALESCE(${status_tratamento}, status_tratamento),
           consultas_pagas = ${consultas_pagas}
       WHERE id_usuario = ${id}
     `;

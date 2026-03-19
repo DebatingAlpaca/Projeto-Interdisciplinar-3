@@ -114,6 +114,7 @@ export default function PacienteForm() {
     data_nascimento: "",
     observacoes: "",
     consultas_pagas: 0,
+    status_tratamento: "Ativo",
   });
   const [modal, setModal] = useState({ visivel: false, idLogin: "", nome: "" });
   const [erro, setErro] = useState("");
@@ -136,6 +137,7 @@ export default function PacienteForm() {
         data_nascimento: p.data_nascimento?.split("T")[0] || "",
         observacoes: p.observacoes || "",
         consultas_pagas: p.consultas_pagas || 0,
+        status_tratamento: p.status_tratamento || "Ativo",
       });
     } catch (err) {
       setErro("Erro ao carregar paciente");
@@ -276,6 +278,18 @@ export default function PacienteForm() {
                 value={form.consultas_pagas}
                 onChange={handleChange}
               />
+            </div>
+
+            <div className="campo">
+              <label>Status do Tratamento</label>
+              <select
+                name="status_tratamento"
+                value={form.status_tratamento}
+                onChange={handleChange}
+              >
+                <option value="Ativo">Ativo</option>
+                <option value="Inativo">Inativo</option>
+              </select>
             </div>
 
             <div className="campo" style={{ gridColumn: "1 / -1" }}>
