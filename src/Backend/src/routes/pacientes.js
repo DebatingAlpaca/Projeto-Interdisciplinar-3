@@ -203,7 +203,7 @@ router.delete("/:id", async (req, res) => {
 
     await db.sql`DELETE FROM Registro_Execucao WHERE id_paciente = ${id}`;
     await db.sql`DELETE FROM Notificacao WHERE id_paciente = ${id}`;
-    await db.sql`DELETE FROM Plano_Exercicios WHERE id_paciente = ${id}`;
+    await db.sql`DELETE FROM Lembrete_Paciente WHERE id_paciente = ${id}`;
     await db.sql`DELETE FROM Sessao WHERE id_paciente = ${id}`;
     await db.sql`DELETE FROM Consulta WHERE id_paciente = ${id}`;
     await db.sql`DELETE FROM Usuario_Paciente WHERE id_usuario = ${id}`;
