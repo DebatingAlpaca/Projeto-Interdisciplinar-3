@@ -5,58 +5,54 @@ const jwt = require("jsonwebtoken");
 const { getDb } = require("../database/db");
 const { hashSenha, verificarSenha } = require("../utils/hash");
 
-// POST /auth/login
+// Gera id_login de 6 dígitos único
+async function gerarIdLogin(db) {
+  let idLogin;
+  let existe = true;
+
+  while (existe) {
+    idLogin = String(Math.floor(100000 + Math.random() * 900000));
+    const resultado = await db.sql`
+      SELECT id_usuario FROM Usuario WHERE id_login = ${idLogin}
+    `;
+    existe = resultado.length > 0;
+  }
+
+  return idLogin;
+}
+
+// POST /auth/login — agora usa CPF + id_login
 router.post("/login", async (req, res) => {
   try {
     const db = getDb();
-    const { email, senha } = req.body;
+    const { cpf, id_login } = req.body;
 
-    if (!email || !senha) {
-      return res.status(400).json({ erro: "email e senha são obrigatórios" });
+    if (!cpf || !id_login) {
+      return res.status(400).json({ erro: "cpf e id_login são obrigatórios" });
     }
 
-    // Busca o usuário
+    // Busca paciente pelo CPF
     const usuarios = await db.sql`
-      SELECT id_usuario, nome, email, senha FROM Usuario
-      WHERE email = ${email}
+      SELECT u.id_usuario, u.nome, u.email, u.id_login
+      FROM Usuario u
+      INNER JOIN Usuario_Paciente p ON u.id_usuario = p.id_usuario
+      WHERE p.cpf = ${cpf}
     `;
 
     if (usuarios.length === 0) {
-      return res.status(401).json({ erro: "Email ou senha inválidos" });
+      return res.status(401).json({ erro: "CPF ou código inválidos" });
     }
 
     const usuario = usuarios[0];
 
-    // Verifica a senha — suporta bcrypt E texto puro (legado)
-    let senhaValida = false;
-
-    if (usuario.senha.startsWith("$2")) {
-      // Senha criptografada com bcrypt
-      senhaValida = await verificarSenha(senha, usuario.senha);
-    } else {
-      // Senha legada em texto puro
-      senhaValida = senha === usuario.senha;
+    // Verifica id_login
+    if (usuario.id_login !== id_login) {
+      return res.status(401).json({ erro: "CPF ou código inválidos" });
     }
 
-    if (!senhaValida) {
-      return res.status(401).json({ erro: "Email ou senha inválidos" });
-    }
-
-    // Verifica se é admin ou paciente
-    const isAdmin = await db.sql`
-      SELECT id_usuario FROM Usuario_ADM 
-      WHERE id_usuario = ${usuario.id_usuario}
-    `;
-
-    const perfil = isAdmin.length > 0 ? "admin" : "paciente";
-
-    // Gera o token JWT
+    // Gera token JWT
     const token = jwt.sign(
-      {
-        id: usuario.id_usuario,
-        nome: usuario.nome,
-        perfil,
-      },
+      { id: usuario.id_usuario, nome: usuario.nome, perfil: "paciente" },
       process.env.JWT_SECRET,
       { expiresIn: process.env.JWT_EXPIRES_IN || "7d" },
     );
@@ -68,7 +64,7 @@ router.post("/login", async (req, res) => {
         id: usuario.id_usuario,
         nome: usuario.nome,
         email: usuario.email,
-        perfil,
+        perfil: "paciente",
       },
     });
   } catch (error) {
@@ -76,60 +72,62 @@ router.post("/login", async (req, res) => {
   }
 });
 
-// POST /auth/registro — Cadastro de novo paciente
-router.post("/registro", async (req, res) => {
+// POST /auth/login-admin — login do admin com email + senha
+router.post("/login-admin", async (req, res) => {
   try {
     const db = getDb();
-    const { nome, email, senha, telefone, data_nascimento, observacoes } =
-      req.body;
+    const { email, senha } = req.body;
 
-    if (!nome || !email || !senha) {
-      return res.status(400).json({
-        erro: "nome, email e senha são obrigatórios",
-      });
+    if (!email || !senha) {
+      return res.status(400).json({ erro: "email e senha são obrigatórios" });
     }
 
-    // Verifica se email já existe
-    const emailExiste = await db.sql`
-      SELECT id_usuario FROM Usuario WHERE email = ${email}
+    const usuarios = await db.sql`
+      SELECT u.id_usuario, u.nome, u.email, u.senha
+      FROM Usuario u
+      INNER JOIN Usuario_ADM a ON u.id_usuario = a.id_usuario
+      WHERE u.email = ${email}
     `;
 
-    if (emailExiste.length > 0) {
-      return res.status(409).json({ erro: "Email já cadastrado" });
+    if (usuarios.length === 0) {
+      return res.status(401).json({ erro: "Email ou senha inválidos" });
     }
 
-    // Criptografa a senha
-    const senhaCriptografada = await hashSenha(senha);
+    const usuario = usuarios[0];
 
-    // Insere na tabela Usuario
-    await db.sql`
-      INSERT INTO Usuario (nome, email, senha)
-      VALUES (${nome}, ${email}, ${senhaCriptografada})
-    `;
+    let senhaValida = false;
+    if (usuario.senha.startsWith("$2")) {
+      senhaValida = await verificarSenha(senha, usuario.senha);
+    } else {
+      senhaValida = senha === usuario.senha;
+    }
 
-    const resultado = await db.sql`
-      SELECT id_usuario FROM Usuario WHERE email = ${email}
-    `;
-    const id_novo = resultado[0].id_usuario;
+    if (!senhaValida) {
+      return res.status(401).json({ erro: "Email ou senha inválidos" });
+    }
 
-    // Insere na tabela Usuario_Paciente
-    await db.sql`
-      INSERT INTO Usuario_Paciente 
-        (id_usuario, telefone, data_nascimento, observacoes, status_tratamento)
-      VALUES 
-        (${id_novo}, ${telefone}, ${data_nascimento}, ${observacoes}, 'Ativo')
-    `;
+    const token = jwt.sign(
+      { id: usuario.id_usuario, nome: usuario.nome, perfil: "admin" },
+      process.env.JWT_SECRET,
+      { expiresIn: process.env.JWT_EXPIRES_IN || "7d" },
+    );
 
-    res.status(201).json({
-      mensagem: "Cadastro realizado com sucesso!",
-      id_usuario: id_novo,
+    res.json({
+      mensagem: "Login realizado com sucesso!",
+      token,
+      usuario: {
+        id: usuario.id_usuario,
+        nome: usuario.nome,
+        email: usuario.email,
+        perfil: "admin",
+      },
     });
   } catch (error) {
     res.status(500).json({ erro: error.message });
   }
 });
 
-// GET /auth/me — Retorna dados do usuário logado
+// GET /auth/me
 router.get(
   "/me",
   require("../middlewares/auth").autenticar,
@@ -138,8 +136,9 @@ router.get(
       const db = getDb();
 
       const usuario = await db.sql`
-      SELECT u.id_usuario, u.nome, u.email, u.data_cadastro,
-             p.telefone, p.data_nascimento, p.status_tratamento
+      SELECT u.id_usuario, u.nome, u.email, u.id_login, u.data_cadastro,
+             p.cpf, p.telefone, p.data_nascimento, 
+             p.status_tratamento, p.consultas_pagas
       FROM Usuario u
       LEFT JOIN Usuario_Paciente p ON u.id_usuario = p.id_usuario
       WHERE u.id_usuario = ${req.usuario.id}
@@ -152,7 +151,7 @@ router.get(
   },
 );
 
-// PUT /auth/alterar-senha
+// PUT /auth/alterar-senha (apenas admin)
 router.put(
   "/alterar-senha",
   require("../middlewares/auth").autenticar,
@@ -163,21 +162,19 @@ router.put(
       const id_usuario = req.usuario.id;
 
       if (!senha_atual || !nova_senha) {
-        return res.status(400).json({
-          erro: "senha_atual e nova_senha são obrigatórios",
-        });
+        return res
+          .status(400)
+          .json({ erro: "senha_atual e nova_senha são obrigatórios" });
       }
 
-      // Busca senha atual do banco
       const usuario = await db.sql`
-    SELECT senha FROM Usuario WHERE id_usuario = ${id_usuario}
-  `;
+      SELECT senha FROM Usuario WHERE id_usuario = ${id_usuario}
+    `;
 
       if (usuario.length === 0) {
         return res.status(404).json({ erro: "Usuário não encontrado" });
       }
 
-      // Verifica senha atual — suporta bcrypt e legado
       let senhaValida = false;
       if (usuario[0].senha.startsWith("$2")) {
         senhaValida = await verificarSenha(senha_atual, usuario[0].senha);
@@ -189,13 +186,11 @@ router.put(
         return res.status(401).json({ erro: "Senha atual incorreta" });
       }
 
-      // Criptografa e salva a nova senha
       const novaSenhaCriptografada = await hashSenha(nova_senha);
-
       await db.sql`
-    UPDATE Usuario SET senha = ${novaSenhaCriptografada}
-    WHERE id_usuario = ${id_usuario}
-  `;
+      UPDATE Usuario SET senha = ${novaSenhaCriptografada}
+      WHERE id_usuario = ${id_usuario}
+    `;
 
       res.json({ mensagem: "Senha alterada com sucesso!" });
     } catch (error) {
@@ -204,4 +199,4 @@ router.put(
   },
 );
 
-module.exports = router;
+module.exports = { router, gerarIdLogin };
