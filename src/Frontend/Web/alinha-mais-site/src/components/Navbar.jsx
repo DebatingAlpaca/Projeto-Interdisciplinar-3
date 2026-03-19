@@ -32,17 +32,11 @@ export default function Navbar() {
         zIndex: 100,
       }}
     >
-      <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-        <span
-          style={{
-            fontSize: "20px",
-            fontWeight: 700,
-            color: "var(--primaria)",
-          }}
-        >
-          Maya RPG
-        </span>
-      </div>
+      <span
+        style={{ fontSize: "20px", fontWeight: 700, color: "var(--primaria)" }}
+      >
+        Maya RPG
+      </span>
 
       <div
         style={{
@@ -54,8 +48,7 @@ export default function Navbar() {
       >
         {[
           { path: "/pacientes", label: "Pacientes" },
-          { path: "/exercicios", label: "Exercícios" },
-          { path: "/planos", label: "Planos" },
+          { path: "/lembretes", label: "Lembretes" },
         ].map(({ path, label }) => (
           <Link
             key={path}

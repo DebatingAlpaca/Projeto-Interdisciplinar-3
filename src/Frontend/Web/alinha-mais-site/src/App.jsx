@@ -4,8 +4,7 @@ import Login from "./pages/Login";
 import Pacientes from "./pages/Pacientes";
 import PacienteForm from "./pages/PacienteForm";
 import Prontuario from "./pages/Prontuario";
-import Exercicios from "./pages/Exercicios";
-import Planos from "./pages/Planos";
+import Lembretes from "./pages/Lembretes";
 import Navbar from "./components/Navbar";
 
 function RotaProtegida({ children }) {
@@ -75,22 +74,11 @@ export default function App() {
         />
 
         <Route
-          path="/exercicios"
+          path="/lembretes"
           element={
             <RotaProtegida>
               <Layout>
-                <Exercicios />
-              </Layout>
-            </RotaProtegida>
-          }
-        />
-
-        <Route
-          path="/planos"
-          element={
-            <RotaProtegida>
-              <Layout>
-                <Planos />
+                <Lembretes />
               </Layout>
             </RotaProtegida>
           }
