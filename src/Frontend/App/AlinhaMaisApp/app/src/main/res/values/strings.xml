@@ -52,5 +52,10 @@
     <string name="botao_youtube_ImgD">Botão Youtube</string>
     <string name="botao_website_ImgD">Botão Website</string>
 
+    <!-- Strings de contato -->
+    <string name="texto_contatos">"Tem alguma dúvida ou precisa de uma mãozinha?\nEstamos prontos para ajudar!\nEscolha um dos canais abaixo e fale com a gente agora mesmo."</string>
+    <string name="contatos_Bold">Contatos</string>
+    <string name="emailBtn">Email</string>
+    <string name="whatsappBtn">Whatsapp</string>
 
 </resources>

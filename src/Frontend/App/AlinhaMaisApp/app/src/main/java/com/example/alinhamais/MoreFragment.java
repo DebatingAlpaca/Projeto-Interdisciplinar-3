@@ -59,6 +59,7 @@ public class MoreFragment extends Fragment {
         ImageButton instagramBtn = rootView.findViewById(R.id.instagramImgBtn);
         ImageButton youtubeBtn = rootView.findViewById(R.id.youtubeImgBtn);
         ImageButton siteBtn = rootView.findViewById(R.id.siteImgBtn);
+        Button contatosBtn = rootView.findViewById(R.id.contatosBtn);
 
         //Manda para os links quando os botões são clicados
         linkedinBtn.setOnClickListener(v -> goToLink("https://www.linkedin.com/in/maya-yoshiko-yamamoto-bb18a736?originalSubdomain=br"));
@@ -68,6 +69,18 @@ public class MoreFragment extends Fragment {
         instagramBtn.setOnClickListener(v -> goToLink("https://www.instagram.com/rpg.maya/"));
 
         siteBtn.setOnClickListener(v -> goToLink("https://mayayamamoto.com.br/"));
+
+        contatosBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ContatosFragment nextFrag = new ContatosFragment();
+
+                getParentFragmentManager().beginTransaction()
+                        .replace(R.id.fragmentsFrame, nextFrag)
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
 
         return (rootView);
 
