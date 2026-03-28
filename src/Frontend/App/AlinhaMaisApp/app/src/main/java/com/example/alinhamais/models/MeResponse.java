@@ -2,6 +2,7 @@ package com.example.alinhamais.models;
 
 import com.google.gson.annotations.SerializedName;
 
+
 public class MeResponse {
     private int id_usuario;
     private String nome;
