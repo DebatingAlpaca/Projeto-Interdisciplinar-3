@@ -22,14 +22,20 @@
 
 
 <p>
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis ligula nunc, maximus maximus ultricies eu, gravida ac diam. In condimentum dui at orci volutpat, non ornare enim cursus. In semper enim eu magna suscipit venenatis. Ut volutpat velit ipsum, vitae tincidunt augue auctor ac. Curabitur porta, eros ut maximus pulvinar, enim nibh finibus tortor, suscipit cursus enim metus id elit. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Integer eget est sit amet neque laoreet sodales ac nec mi. Pellentesque mi purus, vulputate sed nibh vitae, ornare auctor orci. Nullam quis rhoncus nisi. Proin tristique justo turpis, at rhoncus dolor placerat ac. Maecenas ut metus nisl. Mauris quis est bibendum, iaculis nisi ac, ullamcorper sapien. In ultrices dolor nec ex maximus, sit amet aliquet mauris tincidunt. Sed laoreet venenatis lorem, maximus gravida nulla condimentum vel. Suspendisse egestas in libero vel euismod. Morbi accumsan enim eget sem bibendum finibus.
+Projeto Interdisciplinar: Ecossistema Digital Clínica Maya (RPG)
 
-Suspendisse eget metus quis lacus ultricies pulvinar. Integer id est ac sapien tempus porttitor et quis nisl. Donec vitae quam a quam bibendum dignissim id id lectus. Donec orci metus, feugiat vel ante sed, varius ultricies orci. Nullam vel odio in dolor tempor pellentesque vel ac metus. Etiam posuere, turpis vel eleifend gravida, arcu neque ullamcorper purus, eu efficitur dolor dui eget nulla. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nam sit amet justo velit.
+Visão Geral do Projeto
+O projeto visa modernizar a gestão e o atendimento da fisioterapeuta Maya Yoshiko Yamamoto, especialista em Reeducação Postural Global (RPG). Atualmente, a falta de padronização nos registros dificulta a rastreabilidade dos prontuários e o engajamento dos pacientes. Nossa solução propõe um ecossistema digital composto por um Módulo Web administrativo, um Aplicativo Mobile para pacientes e um Backend robusto.
 
-Pellentesque elementum rhoncus massa, sed gravida mauris facilisis quis. Donec luctus libero consectetur diam varius, condimentum sodales odio gravida. Nullam in accumsan neque, a sollicitudin risus. Suspendisse potenti. Suspendisse justo massa, venenatis quis quam eu, semper dictum orci. Donec feugiat mi at lorem mattis, eu auctor nulla dictum. Maecenas fermentum, quam sit amet porttitor euismod, odio enim efficitur dolor, sit amet interdum neque augue at odio.
+Arquitetura e Desenvolvimento (POO)
+Na primeira etapa do projeto, estabelecemos a base lógica do sistema através da Programação Orientada a Objetos (POO). Implementamos uma estrutura de herança onde a classe base Usuario garante a segurança dos dados via senhaHash, derivando para as classes específicas Administrador (Maya) e Paciente. A interface TelaUsuario foi desenhada para centralizar as operações de CRUD, permitindo o gerenciamento eficiente de usuários e planos de tratamento.
 
-Aliquam porttitor accumsan augue quis venenatis. Nam nec porttitor orci. Morbi eleifend lacus sapien, eget lacinia mauris commodo eget. Praesent rhoncus vel lacus eu interdum. Integer fringilla aliquam lectus. Sed eget eleifend mauris. Aenean ante tellus, efficitur quis nisi vel, accumsan gravida velit.
+Principais Funções dos Integrantes
 
+- João Pedro (Programador Backend): Responsável pela arquitetura do sistema e API (conexão entre Web e Mobile).
+- Stefany (Programador Front-end): Foco no desenvolvimento das interfaces (Mobile/Web) e integração com o backend.
+- Bruno (Product Owner): Responsável por garantir que o software atenda às necessidades da Maya pela modelagem de dados e pela manutenção dos diagramas.
+- Guilherme (Documentação e Gestão do Projeto): Responsável pela manutenção de todos os documentos e delegação/atualização das atividades.
 </p>
 
 ## <img src="https://img.icons8.com/?size=100&id=zfHRZ6i1Wg0U&format=png&color=000000" width="20" height="20"/> Protótipo navegável no Figma
