@@ -24,10 +24,10 @@
 <p>
 Projeto Interdisciplinar: Ecossistema Digital Clínica Maya (RPG)
 
-Visão Geral do Projeto
+Visão Geral do Projeto<br>
 O projeto visa modernizar a gestão e o atendimento da fisioterapeuta Maya Yoshiko Yamamoto, especialista em Reeducação Postural Global (RPG). Atualmente, a falta de padronização nos registros dificulta a rastreabilidade dos prontuários e o engajamento dos pacientes. Nossa solução propõe um ecossistema digital composto por um Módulo Web administrativo, um Aplicativo Mobile para pacientes e um Backend robusto.
 
-Arquitetura e Desenvolvimento (POO)
+Arquitetura e Desenvolvimento (POO)<br>
 Na primeira etapa do projeto, estabelecemos a base lógica do sistema através da Programação Orientada a Objetos (POO). Implementamos uma estrutura de herança onde a classe base Usuario garante a segurança dos dados via senhaHash, derivando para as classes específicas Administrador (Maya) e Paciente. A interface TelaUsuario foi desenhada para centralizar as operações de CRUD, permitindo o gerenciamento eficiente de usuários e planos de tratamento.
 
 Principais Funções dos Integrantes
