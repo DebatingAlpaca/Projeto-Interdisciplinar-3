@@ -7,7 +7,7 @@
 
 <h1 align="center">Alinha+</h1>
 
-## Integrantes: <a href="https://github.com/rodriguesbrun">Bruno Rodrigues Da Costa</a>, <a href="https://github.com/GuilhermeMonteiro14">Guilherme Monteiro Da Silva</a>, <a href="https://github.com/DebatingAlpaca">João Pedro Da Silva</a>, <a href="https://github.com/StefanyO8">Stefany Samira De Oliveira Cubertino</a>
+## Integrantes: <a href="https://github.com/rodriguesbrun">Bruno Rodrigues Da Costa</a>, <a href="https://www.linkedin.com/in/guilherme-monteiro14/">Guilherme Monteiro Da Silva</a>, <a href="https://github.com/DebatingAlpaca">João Pedro Da Silva</a>, <a href="https://github.com/StefanyO8">Stefany Samira De Oliveira Cubertino</a>
 
 ## Professores Orientadores: <a href="https://www.linkedin.com/in/katia-bossi/" target="_blank"> Kátia Bossi</a>, <a href="https://br.linkedin.com/in/marco-aurelio-lima-barbosa" target="_blank"> Marco Aurélio Lima Barbosa</a>, <a href="https://br.linkedin.com/in/rodrigo-da-rosa-phd" target="_blank"> Rodrigo da Rosa</a>, <a href="https://br.linkedin.com/in/victorbarq" target="_blank"> Victor Bruno Alexander Rosetti de Quiroz</a><br/>
 
@@ -31,12 +31,6 @@ O projeto visa modernizar a gestão e o atendimento da fisioterapeuta Maya Yoshi
 Arquitetura e Desenvolvimento (POO)<br>
 Na primeira etapa do projeto, estabelecemos a base lógica do sistema através da Programação Orientada a Objetos (POO). Implementamos uma estrutura de herança onde a classe base Usuario garante a segurança dos dados via senhaHash, derivando para as classes específicas Administrador (Maya) e Paciente. A interface TelaUsuario foi desenhada para centralizar as operações de CRUD, permitindo o gerenciamento eficiente de usuários e planos de tratamento.
 
-Principais Funções dos Integrantes
-
-- João Pedro (Programador Backend): Responsável pela arquitetura do sistema e API (conexão entre Web e Mobile).
-- Stefany (Programador Front-end): Foco no desenvolvimento das interfaces (Mobile/Web) e integração com o backend.
-- Bruno (Product Owner): Responsável por garantir que o software atenda às necessidades da Maya pela modelagem de dados e pela manutenção dos diagramas.
-- Guilherme (Documentação e Gestão do Projeto): Responsável pela manutenção de todos os documentos e delegação/atualização das atividades.
 </p>
 
 ## <img src="https://img.icons8.com/?size=100&id=zfHRZ6i1Wg0U&format=png&color=000000" width="20" height="20"/> Protótipo navegável no Figma
