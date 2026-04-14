@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../api/api";
+import { FaEyeSlash, FaEye} from "react-icons/fa";
 
 export default function Pacientes() {
   const [pacientes, setPacientes] = useState([]);
@@ -33,11 +34,23 @@ export default function Pacientes() {
     }
   }
 
+
   const filtrados = pacientes.filter(
     (p) =>
       p.nome.toLowerCase().includes(busca.toLowerCase()) ||
       p.cpf?.includes(busca),
   );
+
+  const [display, setDisplay] = useState(false)
+
+  const handleDisplay = () => {
+    setDisplay(!display)
+  }
+
+  //Para Pop-up
+  //const [showModal, setShowModal] = useState(false);
+  //const [senhaDigitada, setSenhaDigitada] = useState("");
+
 
   return (
     <div>
@@ -80,10 +93,16 @@ export default function Pacientes() {
                   "Nome",
                   "CPF",
                   "Telefone",
-                  "Código",
+                  <th>
+                    Código
+                    <button className="eye-icon" onClick={handleDisplay}>
+                      {display ? <FaEyeSlash size={13} /> : <FaEye size={13} />}
+                    </button> 
+                  </th>,
                   "Status",
                   "Consultas Pagas",
                   "Ações",
+                  
                 ].map((h) => (
                   <th
                     key={h}
@@ -118,7 +137,7 @@ export default function Pacientes() {
                   >
                     {p.telefone}
                   </td>
-                  <td style={{ padding: "12px 8px" }}>
+                  <td style={{ padding: "12px 8px" }}>            
                     <span
                       style={{
                         fontFamily: "monospace",
@@ -126,10 +145,13 @@ export default function Pacientes() {
                         fontSize: "15px",
                         color: "var(--primaria)",
                         letterSpacing: "3px",
+                                                
                       }}
-                    >
-                      {p.id_login}
+                                          >
+                      
+                      {display ? p.id_login : "••••••"}
                     </span>
+                    
                   </td>
                   <td style={{ padding: "12px 8px" }}>
                     <span
