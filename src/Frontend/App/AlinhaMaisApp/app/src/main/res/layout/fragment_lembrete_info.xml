@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/cinzaMedio"
+    tools:context=".LembreteInfoFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center">
+
+        <!-- Layout do streak -->
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:background="@drawable/custom_round_square"
+            android:orientation="horizontal"
+
+            >
+            <!-- Linha -->
+            <View
+                android:layout_gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                android:background= "@drawable/custom_round_square"
+                android:backgroundTint="@color/primariaEscuro"
+                android:layout_margin="25dp"
+                />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:orientation="horizontal"
+                >
+
+                <ImageView
+                    style="@style/CircleG" />
+
+                <ImageView
+                    style="@style/CircleP"
+                    />
+                <ImageView
+                    style="@style/CircleP"
+                    />
+                <ImageView
+                    style="@style/CircleP"
+                    />
+                <ImageView
+                    style="@style/CircleP"
+                    />
+                <ImageView
+                    style="@style/CircleP"
+                    />
+                <ImageView
+                    style="@style/CircleG"
+                    />
+
+            </LinearLayout>
+
+        </FrameLayout>
+
+    </LinearLayout>
+
+
+
+
+</androidx.core.widget.NestedScrollView>
