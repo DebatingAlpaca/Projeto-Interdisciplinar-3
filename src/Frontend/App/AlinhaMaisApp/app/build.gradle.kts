@@ -44,8 +44,7 @@ dependencies {
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
 
-// WorkManager para notificações em background
-    implementation("androidx.work:work-runtime:2.9.0")
+
 // Glide para carregar imagens
     implementation("com.github.bumptech.glide:glide:4.16.0")
 

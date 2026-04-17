@@ -4,8 +4,6 @@ import android.Manifest;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,8 +15,6 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.work.WorkInfo;
-import androidx.work.WorkManager;
 
 import com.example.alinhamais.adapters.LembreteAdapter;
 import com.example.alinhamais.api.RetrofitClient;
@@ -40,7 +36,8 @@ public class LembretesFragment extends Fragment {
     private LembreteAdapter adapter;
     private String token;
     private int idPaciente;
-    private static final String BASE_URL = "https://projeto-interdisciplinar-3.onrender.com";
+    private static final String BASE_URL =
+            "https://projeto-interdisciplinar-3.onrender.com";
 
     private final ActivityResultLauncher<String> permissaoLauncher =
             registerForActivityResult(
@@ -94,36 +91,11 @@ public class LembretesFragment extends Fragment {
                         if (!response.isSuccessful() || response.body() == null) return;
 
                         List<LembreteResponse> lembretes = response.body();
-                        WorkManager wm = WorkManager.getInstance(requireContext());
 
+                        // Agenda alarmes para lembretes ativos
                         for (LembreteResponse l : lembretes) {
                             if (l.getAtivo() == 1) {
-                                // Só agenda se ainda não tiver Worker rodando
-                                wm.getWorkInfosByTag("lembrete_" + l.getIdLembrete())
-                                        .addListener(() -> {
-                                            try {
-                                                List<WorkInfo> infos = wm
-                                                        .getWorkInfosByTag("lembrete_" + l.getIdLembrete())
-                                                        .get();
-
-                                                boolean jaAgendado = false;
-                                                for (WorkInfo info : infos) {
-                                                    if (info.getState() == WorkInfo.State.ENQUEUED ||
-                                                            info.getState() == WorkInfo.State.RUNNING) {
-                                                        jaAgendado = true;
-                                                        break;
-                                                    }
-                                                }
-
-                                                if (!jaAgendado) {
-                                                    LembreteNotificationManager.agendar(
-                                                            requireContext(), l);
-                                                }
-
-                                            } catch (Exception e) {
-                                                e.printStackTrace();
-                                            }
-                                        }, new Handler(Looper.getMainLooper())::post);
+                                LembreteNotificationManager.agendar(requireContext(), l);
                             }
                         }
 
@@ -137,7 +109,8 @@ public class LembretesFragment extends Fragment {
                     @Override
                     public void onFailure(Call<List<LembreteResponse>> call, Throwable t) {
                         Toast.makeText(requireContext(),
-                                "Erro ao carregar lembretes", Toast.LENGTH_SHORT).show();
+                                "Erro ao carregar lembretes",
+                                Toast.LENGTH_SHORT).show();
                     }
                 });
     }
@@ -168,7 +141,8 @@ public class LembretesFragment extends Fragment {
                     @Override
                     public void onFailure(Call<MensagemResponse> call, Throwable t) {
                         Toast.makeText(requireContext(),
-                                "Erro ao atualizar lembrete", Toast.LENGTH_SHORT).show();
+                                "Erro ao atualizar lembrete",
+                                Toast.LENGTH_SHORT).show();
                     }
                 });
     }

@@ -230,6 +230,15 @@ router.put("/:id", async (req, res) => {
           INSERT INTO Lembrete_Paciente (id_lembrete, id_paciente, ativo)
           VALUES (${id}, ${id_paciente}, 1)
         `;
+        await db.sql`
+          INSERT INTO Notificacao (titulo, mensagem, status, id_paciente)
+          VALUES (
+            ${"Novo lembrete criado"},
+            ${`Você recebeu um novo lembrete: ${titulo}`},
+            'nao_lida',
+            ${id_paciente}
+          )
+        `;
       }
     }
 

@@ -36,7 +36,12 @@
         </activity>
 
 
-        <!-- Worker de notificações -->
+        <!-- Receiver que recebe o alarme e envia a notificação -->
+        <receiver
+            android:name=".receivers.LembreteAlarmReceiver"
+            android:exported="true"/>
+
+        <!-- Receiver que reagenda após reiniciar o celular -->
         <receiver
             android:name=".receivers.BootReceiver"
             android:exported="true">

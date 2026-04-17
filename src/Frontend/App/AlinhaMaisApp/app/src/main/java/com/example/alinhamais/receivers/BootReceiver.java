@@ -15,7 +15,6 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-// Reagenda notificações depois que o celular reinicia
 public class BootReceiver extends BroadcastReceiver {
 
     @Override
@@ -25,15 +24,15 @@ public class BootReceiver extends BroadcastReceiver {
         SharedPreferences prefs = context.getSharedPreferences(
                 "MayaPrefs", Context.MODE_PRIVATE);
 
-        String token    = prefs.getString("token", null);
-        int idPaciente  = prefs.getInt("id_usuario", 0);
+        String token   = prefs.getString("token", null);
+        int idPaciente = prefs.getInt("id_usuario", 0);
 
         if (token == null || idPaciente == 0) return;
 
-        // Recarrega lembretes ativos e reagenda
         RetrofitClient.getApiService()
                 .getLembretesPaciente("Bearer " + token, idPaciente)
                 .enqueue(new Callback<List<LembreteResponse>>() {
+
                     @Override
                     public void onResponse(Call<List<LembreteResponse>> call,
                                            Response<List<LembreteResponse>> response) {
