@@ -28,10 +28,7 @@ public interface ApiService {
     Call<MeResponse> getMe(@Header("Authorization") String token);
 
     @GET("lembretes/paciente/{id}")
-    Call<List<LembreteResponse>> getLembretesPaciente(
-            @Header("Authorization") String token,
-            @Path("id") int idPaciente
-    );
+    Call<List<LembreteResponse>> getLembretesPaciente(@Path("id") int id);
 
     @PATCH("lembretes/{id_lembrete}/paciente/{id_paciente}")
     Call<MensagemResponse> toggleLembrete(

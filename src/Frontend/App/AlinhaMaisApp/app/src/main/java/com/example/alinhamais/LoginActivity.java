@@ -47,7 +47,7 @@ public class LoginActivity extends AppCompatActivity {
 
         loginButton.setEnabled(false);
 
-        RetrofitClient.getApiService()
+        RetrofitClient.getApiService(this)
                 .login(new LoginRequest(cpf, id_login))
                 .enqueue(new Callback<LoginResponse>() {
 
@@ -78,7 +78,7 @@ public class LoginActivity extends AppCompatActivity {
     private void salvarDadosEIrParaMain(LoginResponse body) {
         String token = body.getToken();
 
-        RetrofitClient.getApiService()
+        RetrofitClient.getApiService(this)
                 .getMe("Bearer " + token)
                 .enqueue(new Callback<MeResponse>() {
 

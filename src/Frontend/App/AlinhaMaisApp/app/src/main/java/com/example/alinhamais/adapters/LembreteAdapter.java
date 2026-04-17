@@ -119,4 +119,10 @@ public class LembreteAdapter extends
             switchLembrete = view.findViewById(R.id.switchLembrete);
         }
     }
+
+    public void atualizarLista(List<LembreteResponse> novaLista) {
+        lista.clear();
+        lista.addAll(novaLista);
+        notifyDataSetChanged();
+    }
 }

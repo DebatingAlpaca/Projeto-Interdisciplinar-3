@@ -29,8 +29,8 @@ public class BootReceiver extends BroadcastReceiver {
 
         if (token == null || idPaciente == 0) return;
 
-        RetrofitClient.getApiService()
-                .getLembretesPaciente("Bearer " + token, idPaciente)
+        RetrofitClient.getApiService(context)
+                .getLembretesPaciente(idPaciente)
                 .enqueue(new Callback<List<LembreteResponse>>() {
 
                     @Override

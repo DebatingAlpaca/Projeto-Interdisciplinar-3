@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -65,7 +66,18 @@ public class LembretesFragment extends Fragment {
         recycler.setLayoutManager(new LinearLayoutManager(requireContext()));
 
         pedirPermissaoNotificacao();
+
+        adapter = new LembreteAdapter(
+                requireContext(),
+                new java.util.ArrayList<>(),
+                BASE_URL,
+                (lembrete, ativo) -> toggleLembrete(lembrete, ativo)
+        );
+
+        recycler.setAdapter(adapter);
+
         carregarLembretes();
+
 
         return view;
     }
@@ -81,13 +93,15 @@ public class LembretesFragment extends Fragment {
     }
 
     private void carregarLembretes() {
-        RetrofitClient.getApiService()
-                .getLembretesPaciente(token, idPaciente)
+        Log.d("LEMBRETES", "Entrou no carregarLembretes()");
+        RetrofitClient.getApiService(requireContext())
+                .getLembretesPaciente(idPaciente)
                 .enqueue(new Callback<List<LembreteResponse>>() {
 
                     @Override
                     public void onResponse(Call<List<LembreteResponse>> call,
                                            Response<List<LembreteResponse>> response) {
+                        Log.d("LEMBRETES", "onResponse chamado");
                         if (!response.isSuccessful() || response.body() == null) return;
 
                         List<LembreteResponse> lembretes = response.body();
@@ -99,15 +113,15 @@ public class LembretesFragment extends Fragment {
                             }
                         }
 
-                        adapter = new LembreteAdapter(
-                                requireContext(), lembretes, BASE_URL,
-                                (lembrete, ativo) -> toggleLembrete(lembrete, ativo)
-                        );
-                        recycler.setAdapter(adapter);
+                        adapter.atualizarLista(lembretes);
+
+                        Log.d("LEMBRETES", "Resposta: " + response.body());
+                        Log.d("LEMBRETES", "Quantidade: " + (response.body() != null ? response.body().size() : 0));
                     }
 
                     @Override
                     public void onFailure(Call<List<LembreteResponse>> call, Throwable t) {
+                        Log.e("LEMBRETES", "Erro na API", t);
                         Toast.makeText(requireContext(),
                                 "Erro ao carregar lembretes",
                                 Toast.LENGTH_SHORT).show();
@@ -119,7 +133,7 @@ public class LembretesFragment extends Fragment {
         Map<String, Integer> body = new HashMap<>();
         body.put("ativo", ativo ? 1 : 0);
 
-        RetrofitClient.getApiService()
+        RetrofitClient.getApiService(requireContext())
                 .toggleLembrete(token, lembrete.getIdLembrete(), idPaciente, body)
                 .enqueue(new Callback<MensagemResponse>() {
 

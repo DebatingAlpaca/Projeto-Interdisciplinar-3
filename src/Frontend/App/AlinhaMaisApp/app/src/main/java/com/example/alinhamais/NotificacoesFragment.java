@@ -1,7 +1,9 @@
 package com.example.alinhamais;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,12 +43,13 @@ public class NotificacoesFragment extends Fragment {
         recyclerView = view.findViewById(R.id.recyclerNotificacoes);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        api = RetrofitClient.getClient().create(ApiService.class);
+        api = RetrofitClient.getApiService(requireContext());
 
-        SharedPreferences prefs = getContext().getSharedPreferences("user", getContext().MODE_PRIVATE);
+        SharedPreferences prefs = getContext().getSharedPreferences("MayaPrefs", Context.MODE_PRIVATE);
         idPaciente = prefs.getInt("id_usuario", 0);
+        Log.d("DEBUG", "ID: " + idPaciente);
 
-        adapter = new NotificacaoAdapter(lista, notificacao -> {
+        adapter = new NotificacaoAdapter(new ArrayList<>(), notificacao -> {
             marcarComoLida(notificacao.getId_notificacao());
         });
 
@@ -64,6 +67,8 @@ public class NotificacoesFragment extends Fragment {
             @Override
             public void onResponse(Call<List<NotificacaoResponse>> call, Response<List<NotificacaoResponse>> response) {
                 if (response.isSuccessful() && response.body() != null) {
+                    Log.d("API", "Resposta: " + response.body());
+                    Log.d("API", "Quantidade: " + (response.body() != null ? response.body().size() : 0));
                     adapter.setLista(response.body());
                 }
             }
