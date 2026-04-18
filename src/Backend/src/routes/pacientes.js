@@ -217,4 +217,21 @@ router.delete("/:id", async (req, res) => {
   }
 });
 
+router.put("/paciente/:id/lida-todas", async (req, res) => {
+  try {
+    const db = getDb();
+    const { id } = req.params;
+
+    await db.sql`
+      UPDATE Notificacao
+      SET status = 'lida'
+      WHERE id_paciente = ${id}
+    `;
+
+    res.json({ mensagem: "Todas notificações marcadas como lidas" });
+  } catch (error) {
+    res.status(500).json({ erro: error.message });
+  }
+});
+
 module.exports = router;

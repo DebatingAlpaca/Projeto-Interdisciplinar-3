@@ -44,5 +44,7 @@ public interface ApiService {
     @PUT("notificacoes/{id}/lida")
     Call<Void> marcarComoLida(@Path("id") int id);
 
+    @PUT("notificacoes/paciente/{id}/lida-todas")
+    Call<Void> marcarTodasComoLida(@Path("id") int id);
 
 }

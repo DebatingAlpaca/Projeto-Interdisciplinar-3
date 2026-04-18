@@ -37,6 +37,7 @@ public class RetrofitClient {
                         Request request = builder.build();
                         return chain.proceed(request);
                     })
+
                     .build();
 
             retrofit = new Retrofit.Builder()

@@ -101,22 +101,29 @@ public class LembretesFragment extends Fragment {
                     @Override
                     public void onResponse(Call<List<LembreteResponse>> call,
                                            Response<List<LembreteResponse>> response) {
+
                         Log.d("LEMBRETES", "onResponse chamado");
-                        if (!response.isSuccessful() || response.body() == null) return;
+                        Log.d("LEMBRETES", "Código: " + response.code());
+
+                        if (!response.isSuccessful()) {
+                            try {
+                                Log.e("LEMBRETES", "Erro body: " + response.errorBody().string());
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                            return;
+                        }
+
+                        if (response.body() == null) {
+                            Log.e("LEMBRETES", "Body veio NULL");
+                            return;
+                        }
 
                         List<LembreteResponse> lembretes = response.body();
 
-                        // Agenda alarmes para lembretes ativos
-                        for (LembreteResponse l : lembretes) {
-                            if (l.getAtivo() == 1) {
-                                LembreteNotificationManager.agendar(requireContext(), l);
-                            }
-                        }
+                        Log.d("LEMBRETES", "Quantidade: " + lembretes.size());
 
                         adapter.atualizarLista(lembretes);
-
-                        Log.d("LEMBRETES", "Resposta: " + response.body());
-                        Log.d("LEMBRETES", "Quantidade: " + (response.body() != null ? response.body().size() : 0));
                     }
 
                     @Override
