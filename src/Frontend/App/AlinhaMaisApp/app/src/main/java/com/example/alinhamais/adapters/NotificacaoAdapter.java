@@ -18,6 +18,11 @@ import java.util.List;
 public class NotificacaoAdapter extends RecyclerView.Adapter<NotificacaoAdapter.ViewHolder> {
 
     private List<NotificacaoResponse> lista;
+
+    public List<NotificacaoResponse> getLista() {
+        return lista;
+    }
+
     private OnItemClickListener listener;
 
     public interface OnItemClickListener {
@@ -50,8 +55,7 @@ public class NotificacaoAdapter extends RecyclerView.Adapter<NotificacaoAdapter.
         holder.mensagem.setText(n.getMensagem());
         holder.data.setText(n.getData_envio());
 
-
-        // Destaque se não lida
+        // 🔥 CORES (lida vs nao_lida)
         if ("nao_lida".equals(n.getStatus())) {
 
             holder.cardView.setCardBackgroundColor(Color.parseColor("#3EBAD2"));
@@ -69,8 +73,11 @@ public class NotificacaoAdapter extends RecyclerView.Adapter<NotificacaoAdapter.
             holder.data.setTextColor(Color.DKGRAY);
         }
 
+        // 🔥 CLIQUE (opcional: marcar individual como lida)
         holder.itemView.setOnClickListener(v -> {
-            listener.onClick(n);
+            if (listener != null) {
+                listener.onClick(n);
+            }
         });
     }
 
@@ -85,6 +92,7 @@ public class NotificacaoAdapter extends RecyclerView.Adapter<NotificacaoAdapter.
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+
             titulo = itemView.findViewById(R.id.txtTitulo);
             mensagem = itemView.findViewById(R.id.txtMensagem);
             data = itemView.findViewById(R.id.txtData);

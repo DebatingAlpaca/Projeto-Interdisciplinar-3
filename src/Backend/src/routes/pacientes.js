@@ -228,9 +228,9 @@ router.put("/paciente/:id/lida-todas", async (req, res) => {
       WHERE id_paciente = ${id}
     `;
 
-    console.log("Linhas afetadas:", result.rowCount);
+    console.log("Linhas atualizadas:", result.rowCount);
 
-    res.json({ ok: true });
+    res.json({ sucesso: true });
   } catch (error) {
     console.error(error);
     res.status(500).json({ erro: error.message });
