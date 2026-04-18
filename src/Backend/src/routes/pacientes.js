@@ -217,24 +217,4 @@ router.delete("/:id", async (req, res) => {
   }
 });
 
-router.put("/paciente/:id/lida-todas", async (req, res) => {
-  try {
-    const db = getDb();
-    const { id } = req.params;
-
-    const result = await db.sql`
-      UPDATE Notificacao
-      SET status = 'lida'
-      WHERE id_paciente = ${id}
-    `;
-
-    console.log("Linhas atualizadas:", result.rowCount);
-
-    res.json({ sucesso: true });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ erro: error.message });
-  }
-});
-
 module.exports = router;
