@@ -5,8 +5,8 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
-import android.content.Intent;
 import android.provider.Settings;
+import android.util.Log;
 
 import com.example.alinhamais.models.LembreteResponse;
 import com.example.alinhamais.receivers.LembreteAlarmReceiver;
@@ -17,12 +17,9 @@ import java.util.List;
 
 public class LembreteNotificationManager {
 
-
-
-
     // Agenda todos os alarmes de um lembrete
     public static void agendar(Context context, LembreteResponse lembrete) {
-        cancelar(context, lembrete.getIdLembrete()); // Cancela anteriores antes
+        cancelar(context, lembrete.getIdLembrete());
 
         List<int[]> horarios = calcularHorarios(
                 lembrete.getHorarioInicio(),
@@ -33,9 +30,13 @@ public class LembreteNotificationManager {
         AlarmManager alarmManager =
                 (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
 
+        Log.d("LEMBRETE", "Agendando: " + lembrete.getTitulo());
+        Log.d("LEMBRETE", "Qtd horários: " + horarios.size());
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             if (!alarmManager.canScheduleExactAlarms()) {
-                Intent intent = new Intent(android.provider.Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM);
+                Log.w("LEMBRETE", "Permissão de alarme exato NÃO concedida");
+                Intent intent = new Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);
                 return;
@@ -46,13 +47,11 @@ public class LembreteNotificationManager {
             int hora   = horarios.get(i)[0];
             int minuto = horarios.get(i)[1];
 
-            // Monta o Intent com os dados da notificação
             Intent intent = new Intent(context, LembreteAlarmReceiver.class);
-            intent.putExtra(LembreteAlarmReceiver.EXTRA_TITULO,    lembrete.getTitulo());
+            intent.putExtra(LembreteAlarmReceiver.EXTRA_TITULO, lembrete.getTitulo());
             intent.putExtra(LembreteAlarmReceiver.EXTRA_DESCRICAO, lembrete.getDescricao());
-            intent.putExtra(LembreteAlarmReceiver.EXTRA_ID,        lembrete.getIdLembrete());
+            intent.putExtra(LembreteAlarmReceiver.EXTRA_ID, lembrete.getIdLembrete());
 
-            // Cada horário tem um requestCode único
             int requestCode = lembrete.getIdLembrete() * 1000 + i;
 
             PendingIntent pendingIntent = PendingIntent.getBroadcast(
@@ -62,29 +61,31 @@ public class LembreteNotificationManager {
                     PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE
             );
 
-            // Calcula quando é o próximo disparo desse horário
             Calendar calendario = Calendar.getInstance();
             calendario.set(Calendar.HOUR_OF_DAY, hora);
             calendario.set(Calendar.MINUTE, minuto);
             calendario.set(Calendar.SECOND, 0);
             calendario.set(Calendar.MILLISECOND, 0);
 
-            // Se já passou hoje, agenda para amanhã
+            // Se já passou, agenda pro próximo dia
             if (calendario.getTimeInMillis() <= System.currentTimeMillis()) {
                 calendario.add(Calendar.DAY_OF_YEAR, 1);
             }
 
-            // Agenda para repetir todo dia no mesmo horário
+            long triggerTime = calendario.getTimeInMillis();
+
+            Log.d("LEMBRETE", "Agendado para: " + hora + ":" + minuto);
+
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 alarmManager.setExactAndAllowWhileIdle(
                         AlarmManager.RTC_WAKEUP,
-                        calendario.getTimeInMillis(),
+                        triggerTime,
                         pendingIntent
                 );
             } else {
                 alarmManager.setExact(
                         AlarmManager.RTC_WAKEUP,
-                        calendario.getTimeInMillis(),
+                        triggerTime,
                         pendingIntent
                 );
             }
@@ -96,9 +97,9 @@ public class LembreteNotificationManager {
         AlarmManager alarmManager =
                 (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
 
-        // Cancela até 100 horários possíveis por lembrete
         for (int i = 0; i < 100; i++) {
             Intent intent = new Intent(context, LembreteAlarmReceiver.class);
+
             int requestCode = idLembrete * 1000 + i;
 
             PendingIntent pendingIntent = PendingIntent.getBroadcast(
@@ -122,8 +123,7 @@ public class LembreteNotificationManager {
         }
     }
 
-    // Calcula todos os horários entre início e fim com o intervalo
-    // Ex: 07:00 às 22:00 com 60min → [07:00, 08:00, 09:00... 22:00]
+    // Calcula horários entre início e fim com intervalo
     public static List<int[]> calcularHorarios(String inicio, String fim, int intervaloMinutos) {
         List<int[]> horarios = new ArrayList<>();
 

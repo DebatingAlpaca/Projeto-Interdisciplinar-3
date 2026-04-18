@@ -105,33 +105,23 @@ public class NotificacoesFragment extends Fragment {
         });
     }
 
-//    private void marcarTodasComoLida() {
-//        api.marcarTodasComoLida(idPaciente).enqueue(new Callback<Void>() {
-//            @Override
-//            public void onResponse(Call<Void> call, Response<Void> response) {
-//
-//                if (response.isSuccessful()) {
-//                    carregarNotificacoes();
-//                }
-//
-//            }
-//
-//            @Override
-//            public void onFailure(Call<Void> call, Throwable t) {
-//                t.printStackTrace();
-//            }
-//        });
-//    }
-
     private void marcarTodasComoLida() {
+        api.marcarTodasComoLida(idPaciente).enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
 
-        List<NotificacaoResponse> novaLista = adapter.getLista();
+                if (response.isSuccessful()) {
+                    carregarNotificacoes();
+                }
 
-        for (NotificacaoResponse n : novaLista) {
-            n.setStatus("lida");
-        }
+            }
 
-        adapter.setLista(novaLista);
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
     }
+
 
 }
