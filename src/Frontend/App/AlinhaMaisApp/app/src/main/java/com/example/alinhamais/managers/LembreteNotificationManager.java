@@ -5,6 +5,8 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
+import android.content.Intent;
+import android.provider.Settings;
 
 import com.example.alinhamais.models.LembreteResponse;
 import com.example.alinhamais.receivers.LembreteAlarmReceiver;
@@ -14,6 +16,9 @@ import java.util.Calendar;
 import java.util.List;
 
 public class LembreteNotificationManager {
+
+
+
 
     // Agenda todos os alarmes de um lembrete
     public static void agendar(Context context, LembreteResponse lembrete) {
@@ -27,6 +32,15 @@ public class LembreteNotificationManager {
 
         AlarmManager alarmManager =
                 (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            if (!alarmManager.canScheduleExactAlarms()) {
+                Intent intent = new Intent(android.provider.Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(intent);
+                return;
+            }
+        }
 
         for (int i = 0; i < horarios.size(); i++) {
             int hora   = horarios.get(i)[0];

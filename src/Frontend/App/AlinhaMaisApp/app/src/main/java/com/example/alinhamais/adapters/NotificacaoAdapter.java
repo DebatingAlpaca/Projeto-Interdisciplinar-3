@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.alinhamais.R;
@@ -49,11 +50,23 @@ public class NotificacaoAdapter extends RecyclerView.Adapter<NotificacaoAdapter.
         holder.mensagem.setText(n.getMensagem());
         holder.data.setText(n.getData_envio());
 
+
         // Destaque se não lida
         if ("nao_lida".equals(n.getStatus())) {
-            holder.itemView.setBackgroundColor(Color.parseColor("#E3F2FD"));
+
+            holder.cardView.setCardBackgroundColor(Color.parseColor("#3EBAD2"));
+
+            holder.titulo.setTextColor(Color.WHITE);
+            holder.mensagem.setTextColor(Color.WHITE);
+            holder.data.setTextColor(Color.parseColor("#E0E0E0"));
+
         } else {
-            holder.itemView.setBackgroundColor(Color.WHITE);
+
+            holder.cardView.setCardBackgroundColor(Color.WHITE);
+
+            holder.titulo.setTextColor(Color.BLACK);
+            holder.mensagem.setTextColor(Color.BLACK);
+            holder.data.setTextColor(Color.DKGRAY);
         }
 
         holder.itemView.setOnClickListener(v -> {
@@ -68,12 +81,14 @@ public class NotificacaoAdapter extends RecyclerView.Adapter<NotificacaoAdapter.
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView titulo, mensagem, data;
+        CardView cardView;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             titulo = itemView.findViewById(R.id.txtTitulo);
             mensagem = itemView.findViewById(R.id.txtMensagem);
             data = itemView.findViewById(R.id.txtData);
+            cardView = itemView.findViewById(R.id.cardNotificacao);
         }
     }
 }

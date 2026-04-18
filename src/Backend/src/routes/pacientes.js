@@ -222,14 +222,17 @@ router.put("/paciente/:id/lida-todas", async (req, res) => {
     const db = getDb();
     const { id } = req.params;
 
-    await db.sql`
+    const result = await db.sql`
       UPDATE Notificacao
       SET status = 'lida'
       WHERE id_paciente = ${id}
     `;
 
-    res.json({ mensagem: "Todas notificações marcadas como lidas" });
+    console.log("Linhas afetadas:", result.rowCount);
+
+    res.json({ ok: true });
   } catch (error) {
+    console.error(error);
     res.status(500).json({ erro: error.message });
   }
 });

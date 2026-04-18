@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -40,6 +41,14 @@ public class NotificacoesFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_notificacoes, container, false);
 
+        Button btn = view.findViewById(R.id.btnMarcarTodas);
+
+        btn.setOnClickListener(v -> {
+            Log.d("NOTIFICACOES", "Botão clicado");
+            marcarTodasComoLida();
+        });
+
+
         recyclerView = view.findViewById(R.id.recyclerNotificacoes);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
@@ -67,8 +76,9 @@ public class NotificacoesFragment extends Fragment {
             @Override
             public void onResponse(Call<List<NotificacaoResponse>> call, Response<List<NotificacaoResponse>> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    Log.d("API", "Resposta: " + response.body());
-                    Log.d("API", "Quantidade: " + (response.body() != null ? response.body().size() : 0));
+                    for (NotificacaoResponse n : response.body()) {
+                        Log.d("STATUS", "ID: " + n.getId_notificacao() + " - " + n.getStatus());
+                    }
                     adapter.setLista(response.body());
                 }
             }
@@ -93,4 +103,23 @@ public class NotificacoesFragment extends Fragment {
             }
         });
     }
+
+    private void marcarTodasComoLida() {
+        api.marcarTodasComoLida(idPaciente).enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+
+                if (response.isSuccessful()) {
+                    carregarNotificacoes();
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
+    }
+
 }
