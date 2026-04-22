@@ -43,9 +43,32 @@ public class LembreteNotificationManager {
             }
         }
 
+
+        int agendados = 0;
+        int limite = 5; // evita estourar 500 alarmes
+
+        long agora = System.currentTimeMillis();
+
         for (int i = 0; i < horarios.size(); i++) {
+            if (agendados >= limite) break;
+
             int hora   = horarios.get(i)[0];
             int minuto = horarios.get(i)[1];
+
+            Calendar calendario = Calendar.getInstance();
+            calendario.set(Calendar.HOUR_OF_DAY, hora);
+            calendario.set(Calendar.MINUTE, minuto);
+            calendario.set(Calendar.SECOND, 0);
+            calendario.set(Calendar.MILLISECOND, 0);
+
+            long triggerTime = calendario.getTimeInMillis();
+
+
+            if (triggerTime <= agora) {
+                continue;
+            }
+
+            Log.d("LEMBRETE", "Agendado para: " + hora + ":" + minuto);
 
             Intent intent = new Intent(context, LembreteAlarmReceiver.class);
             intent.putExtra(LembreteAlarmReceiver.EXTRA_TITULO, lembrete.getTitulo());
@@ -61,21 +84,6 @@ public class LembreteNotificationManager {
                     PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE
             );
 
-            Calendar calendario = Calendar.getInstance();
-            calendario.set(Calendar.HOUR_OF_DAY, hora);
-            calendario.set(Calendar.MINUTE, minuto);
-            calendario.set(Calendar.SECOND, 0);
-            calendario.set(Calendar.MILLISECOND, 0);
-
-            // Se já passou, agenda pro próximo dia
-            if (calendario.getTimeInMillis() <= System.currentTimeMillis()) {
-                calendario.add(Calendar.DAY_OF_YEAR, 1);
-            }
-
-            long triggerTime = calendario.getTimeInMillis();
-
-            Log.d("LEMBRETE", "Agendado para: " + hora + ":" + minuto);
-
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 alarmManager.setExactAndAllowWhileIdle(
                         AlarmManager.RTC_WAKEUP,
@@ -89,6 +97,8 @@ public class LembreteNotificationManager {
                         pendingIntent
                 );
             }
+
+            agendados++;
         }
     }
 

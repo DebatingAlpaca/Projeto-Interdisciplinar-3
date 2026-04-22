@@ -124,6 +124,16 @@ public class LembretesFragment extends Fragment {
                         Log.d("LEMBRETES", "Quantidade: " + lembretes.size());
 
                         adapter.atualizarLista(lembretes);
+
+
+                        LembreteNotificationManager.cancelarTodos(requireContext(), lembretes);
+
+
+                        for (LembreteResponse l : lembretes) {
+                            if (l.getAtivo() == 1) {
+                                LembreteNotificationManager.agendar(requireContext(), l);
+                            }
+                        }
                     }
 
                     @Override
@@ -147,13 +157,16 @@ public class LembretesFragment extends Fragment {
                     @Override
                     public void onResponse(Call<MensagemResponse> call,
                                            Response<MensagemResponse> response) {
+
+
+                        LembreteNotificationManager.cancelar(
+                                requireContext(), lembrete.getIdLembrete());
+
                         if (ativo) {
                             LembreteNotificationManager.agendar(requireContext(), lembrete);
                             Toast.makeText(requireContext(),
                                     "Notificações ativadas!", Toast.LENGTH_SHORT).show();
                         } else {
-                            LembreteNotificationManager.cancelar(
-                                    requireContext(), lembrete.getIdLembrete());
                             Toast.makeText(requireContext(),
                                     "Notificações desativadas", Toast.LENGTH_SHORT).show();
                         }
