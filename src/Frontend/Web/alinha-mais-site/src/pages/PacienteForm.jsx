@@ -101,6 +101,58 @@ function ModalCodigoAcesso({ idLogin, nome, onFechar }) {
   );
 }
 
+function mascaraTelefone(e, setForm, form){
+  let digitos = e.target.value.replace(/\D/g, "").slice(0,11);
+
+  let mascarado = digitos;
+  if (digitos.length > 6){
+    mascarado = `(${digitos.slice(0, 2)}) ${digitos.slice(2, 7)}-${digitos.slice(7)}`;
+  } else if (digitos.length > 2) {
+     mascarado = `(${digitos.slice(0, 2)}) ${digitos.slice(2)}`;
+  } else if (digitos.length > 0) {
+    mascarado = `(${digitos})`;
+  }
+  setForm({...form, telefone: mascarado});
+}
+
+function mascaraCPF(e, setForm, form) {
+  let digitos = e.target.value.replace(/\D/g, "").slice(0, 11);
+
+  let mascarado = digitos;
+  if (digitos.length > 9) {
+    mascarado = `${digitos.slice(0, 3)}.${digitos.slice(3, 6)}.${digitos.slice(6, 9)}-${digitos.slice(9)}`;
+  } else if (digitos.length > 6) {
+    mascarado = `${digitos.slice(0, 3)}.${digitos.slice(3, 6)}.${digitos.slice(6)}`;
+  } else if (digitos.length > 3) {
+    mascarado = `${digitos.slice(0, 3)}.${digitos.slice(3)}`;
+  }
+
+  setForm({ ...form, cpf: mascarado });
+}
+
+export function validarCPF(cpf) {
+  const digitos = cpf.replace(/\D/g, "");
+
+  if (digitos.length !== 11) return false;
+  // não aceita sequências repetidas como 111.111.111-11
+  if (/^(\d)\1{10}$/.test(digitos)) return false;
+
+  // valida o 1 dígito 
+  let soma = 0;
+  for (let i = 0; i < 9; i++) soma += parseInt(digitos[i]) * (10 - i);
+  let resto = (soma * 10) % 11;
+  if (resto === 10 || resto === 11) resto = 0;
+  if (resto !== parseInt(digitos[9])) return false;
+
+  // valida 2 dígito 
+  soma = 0;
+  for (let i = 0; i < 10; i++) soma += parseInt(digitos[i]) * (11 - i);
+  resto = (soma * 10) % 11;
+  if (resto === 10 || resto === 11) resto = 0;
+  return resto === parseInt(digitos[10]);
+}
+
+
 export default function PacienteForm() {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -119,6 +171,8 @@ export default function PacienteForm() {
   const [modal, setModal] = useState({ visivel: false, idLogin: "", nome: "" });
   const [erro, setErro] = useState("");
   const [carregando, setCarregando] = useState(false);
+
+  const hoje = new Date().toISOString().split("T")[0];
 
   useEffect(() => {
     if (editando) carregarPaciente();
@@ -151,6 +205,12 @@ export default function PacienteForm() {
   async function handleSubmit(e) {
     e.preventDefault();
     setErro("");
+
+    if (!validarCPF(form.cpf)){
+      setErro("CPF inválido. Verifique os dígitos e tente novamente.");
+      return;
+    }
+    
     setCarregando(true);
 
     try {
@@ -232,8 +292,8 @@ export default function PacienteForm() {
               <input
                 name="cpf"
                 value={form.cpf}
-                onChange={handleChange}
-                placeholder="00000000000"
+                onChange={(e) => mascaraCPF(e, setForm, form)}
+                placeholder="000.000.000-00"
                 disabled={editando}
                 required
               />
@@ -244,8 +304,8 @@ export default function PacienteForm() {
               <input
                 name="telefone"
                 value={form.telefone}
-                onChange={handleChange}
-                placeholder="11999999999"
+                onChange={(e) => mascaraTelefone(e, setForm, form)}
+                placeholder="(11)99999-9999"
               />
             </div>
 
@@ -266,6 +326,7 @@ export default function PacienteForm() {
                 type="date"
                 value={form.data_nascimento}
                 onChange={handleChange}
+                max={hoje}
               />
             </div>
 
