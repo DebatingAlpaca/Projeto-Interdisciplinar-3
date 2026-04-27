@@ -40,6 +40,7 @@ public class LembretesFragment extends Fragment {
     private static final String BASE_URL =
             "https://projeto-interdisciplinar-3.onrender.com";
 
+
     private final ActivityResultLauncher<String> permissaoLauncher =
             registerForActivityResult(
                     new ActivityResultContracts.RequestPermission(),
@@ -57,8 +58,7 @@ public class LembretesFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_lembretes, container, false);
 
-        android.content.SharedPreferences prefs = requireActivity()
-                .getSharedPreferences("MayaPrefs", requireActivity().MODE_PRIVATE);
+        android.content.SharedPreferences prefs = requireActivity().getSharedPreferences("MayaPrefs", requireActivity().MODE_PRIVATE);
         token      = "Bearer " + prefs.getString("token", "");
         idPaciente = prefs.getInt("id_usuario", 0);
 
@@ -68,6 +68,7 @@ public class LembretesFragment extends Fragment {
         pedirPermissaoNotificacao();
 
         adapter = new LembreteAdapter(
+                this,
                 requireContext(),
                 new java.util.ArrayList<>(),
                 BASE_URL,

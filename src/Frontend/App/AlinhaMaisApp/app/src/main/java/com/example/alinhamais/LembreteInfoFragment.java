@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-class LembreteInfoFragment extends Fragment {
+public class LembreteInfoFragment extends Fragment {
 
     @Nullable
     @Override

@@ -8,9 +8,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.alinhamais.LembreteInfoFragment;
+import com.example.alinhamais.LembretesFragment;
 import com.example.alinhamais.R;
 import com.example.alinhamais.models.LembreteResponse;
 import com.google.android.material.switchmaterial.SwitchMaterial;
@@ -29,12 +32,16 @@ public class LembreteAdapter extends
     private final OnToggleListener listener;
     private final String baseUrl;
 
-    public LembreteAdapter(Context context, List<LembreteResponse> lista,
+    private LembretesFragment parentFragment;
+
+    public LembreteAdapter(LembretesFragment fragment, Context context, List<LembreteResponse> lista,
                            String baseUrl, OnToggleListener listener) {
+        this.parentFragment = fragment;
         this.context  = context;
         this.lista    = lista;
         this.baseUrl  = baseUrl;
         this.listener = listener;
+
     }
 
     @NonNull
@@ -97,6 +104,17 @@ public class LembreteAdapter extends
                     ? "Notificações ativas"
                     : "Notificações desativadas");
             listener.onToggle(l, isChecked);
+        });
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                parentFragment.getChildFragmentManager().beginTransaction()
+                        .add(R.id.fragmentsFrame, new LembreteInfoFragment())
+                        .addToBackStack(null)
+                        .commit();
+            }
         });
     }
 
