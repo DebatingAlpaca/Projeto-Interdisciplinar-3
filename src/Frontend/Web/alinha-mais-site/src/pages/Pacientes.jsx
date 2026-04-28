@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../api/api";
-import { FaEyeSlash, FaEye} from "react-icons/fa";
+import { FaEyeSlash, FaEye } from "react-icons/fa";
 
 export default function Pacientes() {
   const [pacientes, setPacientes] = useState([]);
@@ -34,18 +34,13 @@ export default function Pacientes() {
     }
   }
 
-
   const filtrados = pacientes.filter(
     (p) =>
       p.nome.toLowerCase().includes(busca.toLowerCase()) ||
       p.cpf?.includes(busca),
   );
 
-  const [display, setDisplay] = useState(false) // Usando no Pop-up tambem
-
-  const handleDisplay = () => {
-    setShowModal(true);
-  };
+  const [display, setDisplay] = useState(false); // Usando no Pop-up tambem
 
   //Para Pop-up - Criado os estados
   const [showModal, setShowModal] = useState(false);
@@ -54,11 +49,11 @@ export default function Pacientes() {
 
   async function validarSenha() {
     try {
-      const res = await api.post("/auth/login-admin", { email, senha });
-  
+      await api.post("/auth/login-admin", { email, senha });
+
       setDisplay(true);
       setShowModal(false);
-      setEmail("")
+      setEmail("");
       setSenha("");
     } catch {
       alert("E-mail ou senha incorretos");
@@ -129,14 +124,22 @@ export default function Pacientes() {
                   "Telefone",
                   <th>
                     Código
-                    <button className="eye-icon" onClick={() => setShowModal(true)}>
+                    <button
+                      className="eye-icon"
+                      onClick={() => {
+                        if (display) {
+                          setDisplay(false); // já tá mostrando → esconde direto
+                        } else {
+                          setShowModal(true); // não tá mostrando → pede login
+                        }
+                      }}
+                    >
                       {display ? <FaEyeSlash size={13} /> : <FaEye size={13} />}
-                    </button> 
+                    </button>
                   </th>,
                   "Status",
                   "Consultas Pagas",
                   "Ações",
-                  
                 ].map((h) => (
                   <th
                     key={h}
@@ -171,7 +174,7 @@ export default function Pacientes() {
                   >
                     {p.telefone}
                   </td>
-                  <td style={{ padding: "12px 8px" }}>            
+                  <td style={{ padding: "12px 8px" }}>
                     <span
                       style={{
                         fontFamily: "monospace",
@@ -179,13 +182,10 @@ export default function Pacientes() {
                         fontSize: "15px",
                         color: "var(--primaria)",
                         letterSpacing: "3px",
-                                                
                       }}
-                                          >
-                      
+                    >
                       {display ? p.id_login : "••••••"}
                     </span>
-                    
                   </td>
                   <td style={{ padding: "12px 8px" }}>
                     <span
@@ -237,35 +237,34 @@ export default function Pacientes() {
         )}
       </div>
 
-
       {showModal && (
-  <div style={styles.overlay}>
-    <div style={styles.modal}>
-      <h3>Confirmar identidade</h3>
+        <div style={styles.overlay}>
+          <div style={styles.modal}>
+            <h3>Confirmar identidade</h3>
 
-      <input
-        type="text"
-        placeholder="Digite seu e-mail"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        style={{ marginBottom: 10, width: "100%" }}
-      />
+            <input
+              type="text"
+              placeholder="Digite seu e-mail"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              style={{ marginBottom: 10, width: "100%" }}
+            />
 
-      <input
-        type="password"
-        placeholder="Digite sua senha"
-        value={senha}
-        onChange={(e) => setSenha(e.target.value)}
-        style={{ marginBottom: 10, width: "100%" }}
-      />
+            <input
+              type="password"
+              placeholder="Digite sua senha"
+              value={senha}
+              onChange={(e) => setSenha(e.target.value)}
+              style={{ marginBottom: 10, width: "100%" }}
+            />
 
-      <div style={{ display: "flex", gap: 8 }}>
-        <button onClick={validarSenha}>Confirmar</button>
-        <button onClick={() => setShowModal(false)}>Cancelar</button>
-      </div>
-    </div>
-  </div>
-)}
+            <div style={{ display: "flex", gap: 8 }}>
+              <button onClick={validarSenha}>Confirmar</button>
+              <button onClick={() => setShowModal(false)}>Cancelar</button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
