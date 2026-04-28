@@ -41,16 +41,50 @@ export default function Pacientes() {
       p.cpf?.includes(busca),
   );
 
-  const [display, setDisplay] = useState(false)
+  const [display, setDisplay] = useState(false) // Usando no Pop-up tambem
 
   const handleDisplay = () => {
-    setDisplay(!display)
+    setShowModal(true);
+  };
+
+  //Para Pop-up - Criado os estados
+  const [showModal, setShowModal] = useState(false);
+  const [email, setEmail] = useState("");
+  const [senha, setSenha] = useState("");
+
+  async function validarSenha() {
+    try {
+      const res = await api.post("/auth/login-admin", { email, senha });
+  
+      setDisplay(true);
+      setShowModal(false);
+      setEmail("")
+      setSenha("");
+    } catch {
+      alert("E-mail ou senha incorretos");
+    }
   }
 
-  //Para Pop-up
-  //const [showModal, setShowModal] = useState(false);
-  //const [senhaDigitada, setSenhaDigitada] = useState("");
-
+  //Pop Up Style
+  const styles = {
+    overlay: {
+      position: "fixed",
+      top: 0,
+      left: 0,
+      width: "100%",
+      height: "100%",
+      background: "rgba(0,0,0,0.5)",
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+    },
+    modal: {
+      background: "#fff",
+      padding: "20px",
+      borderRadius: "8px",
+      minWidth: "300px",
+    },
+  };
 
   return (
     <div>
@@ -95,7 +129,7 @@ export default function Pacientes() {
                   "Telefone",
                   <th>
                     Código
-                    <button className="eye-icon" onClick={handleDisplay}>
+                    <button className="eye-icon" onClick={() => setShowModal(true)}>
                       {display ? <FaEyeSlash size={13} /> : <FaEye size={13} />}
                     </button> 
                   </th>,
@@ -202,6 +236,36 @@ export default function Pacientes() {
           </table>
         )}
       </div>
+
+
+      {showModal && (
+  <div style={styles.overlay}>
+    <div style={styles.modal}>
+      <h3>Confirmar identidade</h3>
+
+      <input
+        type="text"
+        placeholder="Digite seu e-mail"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        style={{ marginBottom: 10, width: "100%" }}
+      />
+
+      <input
+        type="password"
+        placeholder="Digite sua senha"
+        value={senha}
+        onChange={(e) => setSenha(e.target.value)}
+        style={{ marginBottom: 10, width: "100%" }}
+      />
+
+      <div style={{ display: "flex", gap: 8 }}>
+        <button onClick={validarSenha}>Confirmar</button>
+        <button onClick={() => setShowModal(false)}>Cancelar</button>
+      </div>
+    </div>
+  </div>
+)}
     </div>
   );
 }
