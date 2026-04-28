@@ -9,6 +9,7 @@
      Texto Normal: texto_
      Textos Placeholder: _PH
      Hint: _Hin
+     Lorem Ipsum: tamanho_Lorem
 
      -->
 
@@ -146,5 +147,15 @@
         "For example, position the FAB to one side of stream of a cards so the FAB won’t interfere "
         "when a user tries to pick up one of cards.\n\n"
     </string>
+
+    <!-- Lorem Ipsum -->
+
+    <string name="medio_Lorem">
+        Morbi felis libero, eleifend vitae mattis id, dignissim eget ante. Aenean elit erat, auctor vitae ornare et, pretium id nibh. Praesent commodo orci nec massa porttitor, in ornare nibh vulputate. Mauris cursus mattis tortor id tempus. In purus purus, sollicitudin ut placerat a, scelerisque dictum libero. Curabitur vitae hendrerit felis. Praesent gravida sem pellentesque luctus tempus. Vestibulum facilisis pretium ex. Donec ac euismod velit, at interdum nunc.
+    </string>
+
+    <string name="curto_Lorem">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ultricies risus quam. Praesent auctor ornare lacus cursus auctor. Integer quis tempus lacus, in eleifend neque. Donec nibh lacus, dignissim non. </string>
+
+    <string name="titulo_PH">TITULO</string>
 
 </resources>

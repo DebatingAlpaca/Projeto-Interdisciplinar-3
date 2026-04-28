@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/cinzaMedio"
+    android:paddingVertical="20dp"
+    android:paddingHorizontal="10dp"
     tools:context=".LembreteInfoFragment">
 
     <LinearLayout
@@ -12,57 +15,173 @@
         android:orientation="vertical"
         android:gravity="center">
 
-        <!-- Layout do streak -->
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
+        <!-- Imagem do lembrete -->
+        <com.google.android.material.imageview.ShapeableImageView
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_margin="10dp"
+            app:shapeAppearanceOverlay="@style/Custom_round_corners"
+            android:background="@drawable/teste"
+
+        />
+
+        <!-- Titulo do Lembrete -->
+        <TextView
+            android:layout_margin="10dp"
+            android:id="@+id/tvTituloLembrete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/titulo_PH"
+            style="@style/TextBold"/>
+
+        <!-- Descrição do Lembrete -->
+        <TextView
+            android:id="@+id/tvDescricaoLembrete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
             android:background="@drawable/custom_round_square"
+            android:paddingVertical="20sp"
+            android:paddingHorizontal="40dp"
+            android:text="@string/curto_Lorem"
+            style="@style/TextRegular"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="horizontal"
-
+            android:gravity="center"
+            android:weightSum="4"
+            android:layout_margin="10dp"
             >
-            <!-- Linha -->
-            <View
-                android:layout_gravity="center"
-                android:layout_width="match_parent"
-                android:layout_height="10dp"
-                android:background= "@drawable/custom_round_square"
-                android:backgroundTint="@color/primariaEscuro"
-                android:layout_margin="25dp"
-                />
-
+            <!-- Layout do streak do dia-->
             <LinearLayout
+                android:id="@+id/streakDia"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="100dp"
+                android:background="@drawable/custom_round_square"
                 android:layout_gravity="center"
                 android:gravity="center"
+                android:paddingHorizontal="10dp"
                 android:orientation="horizontal"
+                android:weightSum="7"
+                android:layout_weight="3"
                 >
 
-                <ImageView
-                    style="@style/CircleG" />
-
-                <ImageView
-                    style="@style/CircleP"
-                    />
-                <ImageView
-                    style="@style/CircleP"
-                    />
-                <ImageView
-                    style="@style/CircleP"
-                    />
-                <ImageView
-                    style="@style/CircleP"
-                    />
-                <ImageView
-                    style="@style/CircleP"
-                    />
-                <ImageView
-                    style="@style/CircleG"
-                    />
+                <!-- Os circulos vão aqui dependendo de quantas notificacoes tem para aquele lembrete por dia -->
 
             </LinearLayout>
 
-        </FrameLayout>
+            <CheckBox
+                android:layout_width="100dp"
+                android:layout_height="80dp"
+                android:layout_weight="1"
+                android:background="@drawable/custom_round_square"
+                android:button="@drawable/custom_checkbox"
+                />
+
+
+        </LinearLayout>
+
+        <!-- Layout do streak da semana-->
+        <LinearLayout
+            android:id="@+id/streakSemana"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_margin="10dp"
+            android:background="@drawable/custom_round_square"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:paddingHorizontal="10dp"
+            android:orientation="horizontal"
+            android:weightSum="7"
+            >
+
+            <!-- Domingo -->
+            <LinearLayout style="@style/ColunaStreak">
+                <TextView
+                    android:id="@+id/tv_dia_dom"
+                    style="@style/Circulo"
+                    android:text="D" />
+                <TextView
+                    style="@style/DiaStreak"
+                    android:text="Dom" />
+
+             </LinearLayout>
+
+            <!-- Segunda -->
+            <LinearLayout style="@style/ColunaStreak">
+                <TextView
+                    android:id="@+id/tv_dia_seg"
+                    style="@style/Circulo"
+                    android:text="S" />
+                <TextView
+                    style="@style/DiaStreak"
+                    android:text="Seg" />
+
+            </LinearLayout>
+
+            <!-- Terça -->
+            <LinearLayout style="@style/ColunaStreak">
+                <TextView
+                    android:id="@+id/tv_dia_ter"
+                    style="@style/Circulo"
+                    android:text="T" />
+                <TextView
+                    style="@style/DiaStreak"
+                    android:text="Ter" />
+
+            </LinearLayout>
+
+            <!-- Quarta -->
+            <LinearLayout style="@style/ColunaStreak">
+                <TextView
+                    android:id="@+id/tv_dia_qua"
+                    style="@style/Circulo"
+                    android:text="Q" />
+                <TextView
+                    style="@style/DiaStreak"
+                    android:text="Qua" />
+
+            </LinearLayout>
+
+            <!-- Quinta -->
+            <LinearLayout style="@style/ColunaStreak">
+                <TextView
+                    android:id="@+id/tv_dia_qui"
+                    style="@style/Circulo"
+                    android:text="Q" />
+                <TextView
+                    style="@style/DiaStreak"
+                    android:text="Qui" />
+
+            </LinearLayout>
+
+            <!-- Sexta -->
+            <LinearLayout style="@style/ColunaStreak">
+                <TextView
+                    android:id="@+id/tv_dia_sex"
+                    style="@style/Circulo"
+                    android:text="S" />
+                <TextView
+                    style="@style/DiaStreak"
+                    android:text="Sex" />
+
+            </LinearLayout>
+
+            <!-- Sabado -->
+            <LinearLayout style="@style/ColunaStreak">
+                <TextView
+                    android:id="@+id/tv_day_sab"
+                    style="@style/Circulo"
+                    android:text="S" />
+                <TextView
+                    style="@style/DiaStreak"
+                    android:text="Sáb" />
+
+            </LinearLayout>
+
+        </LinearLayout>
 
     </LinearLayout>
 

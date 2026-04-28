@@ -192,6 +192,7 @@ router.put("/:id", async (req, res) => {
   try {
     const db = getDb();
     const { id } = req.params;
+
     const {
       titulo,
       descricao,
@@ -199,38 +200,54 @@ router.put("/:id", async (req, res) => {
       horario_inicio,
       horario_fim,
       pacientes,
-      remover_foto,
     } = req.body;
 
-    if (remover_foto) {
+    // 1. Atualiza dados do lembrete
+    await db.sql`
+      UPDATE Lembrete
+      SET titulo = ${titulo},
+          descricao = ${descricao},
+          intervalo_minutos = ${intervalo_minutos},
+          horario_inicio = ${horario_inicio},
+          horario_fim = ${horario_fim}
+      WHERE id_lembrete = ${id}
+    `;
+
+    // 2. Buscar pacientes antigos
+    const antigos = await db.sql`
+      SELECT id_paciente FROM Lembrete_Paciente
+      WHERE id_lembrete = ${id}
+    `;
+
+    const antigosIds = antigos.map((p) => p.id_paciente);
+
+    // 3. Garantir array correto
+    const novosIds = pacientes || [];
+
+    // 4. Descobrir quem é novo
+    const realmenteNovos = novosIds.filter((p) => !antigosIds.includes(p));
+
+    // 5. Recriar vínculos
+    await db.sql`DELETE FROM Lembrete_Paciente WHERE id_lembrete = ${id}`;
+
+    for (const id_paciente of novosIds) {
       await db.sql`
-        UPDATE Lembrete
-        SET titulo = ${titulo}, descricao = ${descricao},
-            foto = NULL,
-            intervalo_minutos = ${intervalo_minutos},
-            horario_inicio = ${horario_inicio},
-            horario_fim = ${horario_fim}
-        WHERE id_lembrete = ${id}
-      `;
-    } else {
-      await db.sql`
-        UPDATE Lembrete
-        SET titulo = ${titulo}, descricao = ${descricao},
-            intervalo_minutos = ${intervalo_minutos},
-            horario_inicio = ${horario_inicio},
-            horario_fim = ${horario_fim}
-        WHERE id_lembrete = ${id}
+        INSERT INTO Lembrete_Paciente (id_lembrete, id_paciente, ativo)
+        VALUES (${id}, ${id_paciente}, 1)
       `;
     }
 
-    if (pacientes && pacientes.length > 0) {
-      await db.sql`DELETE FROM Lembrete_Paciente WHERE id_lembrete = ${id}`;
-      for (const id_paciente of pacientes) {
-        await db.sql`
-          INSERT INTO Lembrete_Paciente (id_lembrete, id_paciente, ativo)
-          VALUES (${id}, ${id_paciente}, 1)
-        `;
-      }
+    // 6. Criar notificação SOMENTE para novos
+    for (const id_paciente of realmenteNovos) {
+      await db.sql`
+        INSERT INTO Notificacao (titulo, mensagem, status, id_paciente)
+        VALUES (
+          ${"Novo lembrete criado"},
+          ${`Você recebeu um novo lembrete: ${titulo}`},
+          'nao_lida',
+          ${id_paciente}
+        )
+      `;
     }
 
     res.json({ mensagem: "Lembrete atualizado com sucesso!" });
