@@ -18,6 +18,9 @@ export default function Prontuario() {
   const [abaAtiva, setAbaAtiva] = useState("sessoes");
   const [carregando, setCarregando] = useState(true);
 
+  //Limitar horario de consulta
+  const agora = new Date().toISOString().slice(0, 16);
+
   useEffect(() => {
     carregarDados();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -270,6 +273,7 @@ export default function Prontuario() {
               <label>Data e Hora</label>
               <input
                 type="datetime-local"
+                min={agora}
                 value={novaConsulta.data_consulta}
                 onChange={(e) =>
                   setNovaConsulta({
