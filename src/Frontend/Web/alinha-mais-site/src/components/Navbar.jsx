@@ -20,23 +20,24 @@ export default function Navbar() {
   return (
     <nav
       style={{
-        background: "white",
+        background: "rgba(255,255,255,0.85)",
+        backdropFilter: "blur(8px)",
         boxShadow: "var(--sombra)",
         padding: "0 32px",
         display: "flex",
         alignItems: "center",
         justifyContent: "space-between",
-        height: "64px",
+        height: "80px",
         position: "sticky",
         top: 0,
         zIndex: 100,
       }}
     >
-      <span
-        style={{ fontSize: "20px", fontWeight: 700, color: "var(--primaria)" }}
-      >
-        Maya RPG
-      </span>
+      <img
+        src="https://mayayamamoto.com.br/wp-content/uploads/2018/11/Maya-logo_72_Positivo.png"
+        alt="Maya"
+        style={{ height: "80px" }}
+      />
 
       <div
         style={{
@@ -57,7 +58,7 @@ export default function Navbar() {
               textDecoration: "none",
               color: "var(--texto)",
               fontWeight: 600,
-              fontSize: "14px",
+              fontSize: "20px",
               height: "100%",
               display: "flex",
               alignItems: "center",

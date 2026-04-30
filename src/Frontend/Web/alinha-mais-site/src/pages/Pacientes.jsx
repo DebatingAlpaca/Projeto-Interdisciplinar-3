@@ -34,6 +34,31 @@ export default function Pacientes() {
     }
   }
 
+  function formatarCPF(cpf) {
+    if (!cpf) return "";
+    cpf = cpf.replace(/\D/g, "");
+
+    return cpf
+      .replace(/^(\d{3})(\d)/, "$1.$2")
+      .replace(/^(\d{3})\.(\d{3})(\d)/, "$1.$2.$3")
+      .replace(/\.(\d{3})(\d)/, ".$1-$2");
+  }
+
+  function formatarTelefone(tel) {
+    if (!tel) return "";
+    tel = tel.replace(/\D/g, "");
+
+    if (tel.length === 11) {
+      return tel.replace(/^(\d{2})(\d{5})(\d{4})$/, "($1) $2-$3");
+    }
+
+    if (tel.length === 10) {
+      return tel.replace(/^(\d{2})(\d{4})(\d{4})$/, "($1) $2-$3");
+    }
+
+    return tel;
+  }
+
   const filtrados = pacientes.filter(
     (p) =>
       p.nome.toLowerCase().includes(busca.toLowerCase()) ||
@@ -91,7 +116,15 @@ export default function Pacientes() {
           marginBottom: "24px",
         }}
       >
-        <h2 style={{ fontSize: "22px", fontWeight: 700 }}>Pacientes</h2>
+        <h2
+          style={{
+            fontSize: "22px",
+            fontWeight: 700,
+            color: "#e8735a",
+          }}
+        >
+          Pacientes
+        </h2>
         <button
           className="btn-primario"
           onClick={() => navigate("/pacientes/novo")}
@@ -164,15 +197,11 @@ export default function Pacientes() {
                   <td style={{ padding: "12px 8px", fontWeight: 600 }}>
                     {p.nome}
                   </td>
-                  <td
-                    style={{ padding: "12px 8px", color: "var(--texto-claro)" }}
-                  >
-                    {p.cpf}
+                  <td style={{ color: "var(--texto-claro)" }}>
+                    {formatarCPF(p.cpf)}
                   </td>
-                  <td
-                    style={{ padding: "12px 8px", color: "var(--texto-claro)" }}
-                  >
-                    {p.telefone}
+                  <td style={{ color: "var(--texto-claro)" }}>
+                    {formatarTelefone(p.telefone)}
                   </td>
                   <td style={{ padding: "12px 8px" }}>
                     <span
