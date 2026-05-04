@@ -12,6 +12,7 @@ import android.widget.Button;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.alinhamais.adapters.NotificacaoAdapter;
 import com.example.alinhamais.api.RetrofitClient;
@@ -49,6 +50,13 @@ public class NotificacoesFragment extends Fragment {
             marcarTodasComoLida();
         });
 
+        //arrastar pra cima pra autualizar
+        SwipeRefreshLayout swipeRefresh = view.findViewById(R.id.swipeRefresh);
+
+        swipeRefresh.setOnRefreshListener(() -> {
+            carregarNotificacoes();
+            swipeRefresh.setRefreshing(false);
+        });
 
         recyclerView = view.findViewById(R.id.recyclerNotificacoes);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));

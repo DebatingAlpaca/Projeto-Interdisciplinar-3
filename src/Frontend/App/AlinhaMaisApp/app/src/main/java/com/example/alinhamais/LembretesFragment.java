@@ -18,6 +18,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.alinhamais.adapters.LembreteAdapter;
 import com.example.alinhamais.api.RetrofitClient;
@@ -44,6 +45,8 @@ public class LembretesFragment extends Fragment implements LembreteAdapter.OnIte
             "https://projeto-interdisciplinar-3.onrender.com";
 
 
+
+
     private final ActivityResultLauncher<String> permissaoLauncher =
             registerForActivityResult(
                     new ActivityResultContracts.RequestPermission(),
@@ -68,6 +71,14 @@ public class LembretesFragment extends Fragment implements LembreteAdapter.OnIte
         recycler = view.findViewById(R.id.recyclerLembretes);
         recycler.setLayoutManager(new LinearLayoutManager(requireContext()));
 
+        //carregar lembretes quando subir a tela (atualizar)
+        SwipeRefreshLayout swipeRefresh = view.findViewById(R.id.swipeRefresh);
+
+        swipeRefresh.setOnRefreshListener(() -> {
+            carregarLembretes();
+            swipeRefresh.setRefreshing(false);
+        });
+
         pedirPermissaoNotificacao();
 
         adapter = new LembreteAdapter(
@@ -85,6 +96,11 @@ public class LembretesFragment extends Fragment implements LembreteAdapter.OnIte
 
         return view;
     }
+
+
+
+
+
 
     //quando clicar em um dos adapters abre o fragment de info dos lembretes
     @Override
