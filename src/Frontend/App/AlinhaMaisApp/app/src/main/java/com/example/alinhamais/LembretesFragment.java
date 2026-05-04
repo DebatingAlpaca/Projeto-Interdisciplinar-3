@@ -98,20 +98,21 @@ public class LembretesFragment extends Fragment implements LembreteAdapter.OnIte
     }
 
 
-
-
-
-
     //quando clicar em um dos adapters abre o fragment de info dos lembretes
     @Override
-    public void onItemClick(int position) {
+    public void onItemClick(LembreteResponse lembrete) {
         Fragment infoFragment = new LembreteInfoFragment();
+
+        Bundle args = new Bundle();
+        args.putSerializable("lembrete", lembrete);
+        infoFragment.setArguments(args);
 
         getParentFragmentManager()
                 .beginTransaction()
                 .replace(R.id.fragmentsFrame, infoFragment)
                 .addToBackStack(null)
                 .commit();
+
     }
 
     private void pedirPermissaoNotificacao() {

@@ -30,7 +30,8 @@ public class LembreteAdapter extends
     }
 
     public interface OnItemClickListener {
-        void onItemClick(int position);
+        void onItemClick(LembreteResponse lembrete);
+
     }
 
 
@@ -39,7 +40,7 @@ public class LembreteAdapter extends
     private final Context context;
     private final OnToggleListener listener;
     private final String baseUrl;
-    
+
 
 
     public LembreteAdapter(OnItemClickListener listenerClick, Context context, List<LembreteResponse> lista,
@@ -63,11 +64,12 @@ public class LembreteAdapter extends
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+
         LembreteResponse l = lista.get(position);
 
         holder.tvTitulo.setText(l.getTitulo());
 
-        holder.itemView.setOnClickListener(v -> listenerClick.onItemClick(position));
+        holder.itemView.setOnClickListener(v -> listenerClick.onItemClick(l));
 
         if (l.getDescricao() != null && !l.getDescricao().isEmpty()) {
             holder.tvDescricao.setText(l.getDescricao());

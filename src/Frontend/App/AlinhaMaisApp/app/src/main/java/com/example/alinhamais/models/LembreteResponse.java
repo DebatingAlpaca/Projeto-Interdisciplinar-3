@@ -2,7 +2,9 @@ package com.example.alinhamais.models;
 
 import com.google.gson.annotations.SerializedName;
 
-public class LembreteResponse {
+import java.io.Serializable;
+
+public class LembreteResponse implements Serializable {
     private int id_lembrete;
     private String titulo;
     private String descricao;

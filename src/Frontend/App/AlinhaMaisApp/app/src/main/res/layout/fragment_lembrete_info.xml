@@ -25,7 +25,7 @@
             <!-- Imagem do lembrete -->
             <com.google.android.material.imageview.ShapeableImageView
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_height="wrap_content"
                 app:shapeAppearanceOverlay="@drawable/custom_round_square_solid"
                 android:backgroundTint="@color/boxBg"
                 android:id="@+id/imgLembrete"
@@ -46,7 +46,7 @@
             <!-- Descrição do Lembrete -->
             <TextView
                 android:id="@+id/tvDescricaoLembrete"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:background="@drawable/custom_round_square_solid"
@@ -79,6 +79,7 @@
                     >
 
                     <ImageView
+                        android:id="@+id/fogo"
                         android:layout_width="70dp"
                         android:layout_height="70dp"
                         android:maxWidth="70dp"
@@ -88,23 +89,26 @@
                         />
 
                     <TextView
+                        android:id="@+id/streakNum"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="20"
                         android:textSize="50sp"
                         android:textColor="@color/bw"
-                        android:layout_marginHorizontal="10dp"/>
+                        android:layout_marginEnd="10dp"/>
 
                     <TextView
+                        android:id="@+id/streakTxt"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Complete o exercicio e continue com sua Sequência!"
-                        android:textSize="15sp"/>
+                        android:textSize="12sp"/>
 
 
                 </LinearLayout>
 
                 <CheckBox
+                    android:id="@+id/checkbox"
                     android:layout_width="100dp"
                     android:layout_height="80dp"
                     android:layout_weight="1"
@@ -134,9 +138,11 @@
 
                 <!-- Domingo -->
                 <LinearLayout style="@style/ColunaStreak">
-                    <TextView
+                    <ImageView
                         android:id="@+id/tv_dia_dom"
-                        style="@style/Circulo"
+                        android:layout_height="36dp"
+                        android:layout_width="36dp"
+                        android:background="@drawable/circulo"
                         android:text="D" />
                     <TextView
                         style="@style/DiaStreak"
@@ -146,10 +152,11 @@
 
                 <!-- Segunda -->
                 <LinearLayout style="@style/ColunaStreak">
-                    <TextView
+                    <ImageView
                         android:id="@+id/tv_dia_seg"
-                        style="@style/Circulo"
-                        android:text="S" />
+                        android:layout_height="36dp"
+                        android:layout_width="36dp"
+                        android:background="@drawable/circulo" />                       android:text="S" />
                     <TextView
                         style="@style/DiaStreak"
                         android:text="Seg" />
@@ -158,10 +165,12 @@
 
                 <!-- Terça -->
                 <LinearLayout style="@style/ColunaStreak">
-                    <TextView
+                    <ImageView
                         android:id="@+id/tv_dia_ter"
-                        style="@style/Circulo"
-                        android:text="T" />
+                        android:layout_height="36dp"
+                        android:layout_width="36dp"
+                        android:background="@drawable/circulo"
+                        />
                     <TextView
                         style="@style/DiaStreak"
                         android:text="Ter" />
@@ -170,10 +179,11 @@
 
                 <!-- Quarta -->
                 <LinearLayout style="@style/ColunaStreak">
-                    <TextView
+                    <ImageView
                         android:id="@+id/tv_dia_qua"
-                        style="@style/Circulo"
-                        android:text="Q" />
+                        android:layout_height="36dp"
+                        android:layout_width="36dp"
+                        android:background="@drawable/circulo" />
                     <TextView
                         style="@style/DiaStreak"
                         android:text="Qua" />
@@ -182,10 +192,11 @@
 
                 <!-- Quinta -->
                 <LinearLayout style="@style/ColunaStreak">
-                    <TextView
+                    <ImageView
                         android:id="@+id/tv_dia_qui"
-                        style="@style/Circulo"
-                        android:text="Q" />
+                        android:layout_height="36dp"
+                        android:layout_width="36dp"
+                        android:background="@drawable/circulo"/>
                     <TextView
                         style="@style/DiaStreak"
                         android:text="Qui" />
@@ -194,10 +205,11 @@
 
                 <!-- Sexta -->
                 <LinearLayout style="@style/ColunaStreak">
-                    <TextView
+                    <ImageView
                         android:id="@+id/tv_dia_sex"
-                        style="@style/Circulo"
-                        android:text="S" />
+                        android:layout_height="36dp"
+                        android:layout_width="36dp"
+                        android:background="@drawable/circulo" />
                     <TextView
                         style="@style/DiaStreak"
                         android:text="Sex" />
@@ -206,10 +218,11 @@
 
                 <!-- Sabado -->
                 <LinearLayout style="@style/ColunaStreak">
-                    <TextView
-                        android:id="@+id/tv_day_sab"
-                        style="@style/Circulo"
-                        android:text="S" />
+                    <ImageView
+                        android:id="@+id/tv_dia_sab"
+                        android:layout_height="36dp"
+                        android:layout_width="36dp"
+                        android:background="@drawable/circulo" />
                     <TextView
                         style="@style/DiaStreak"
                         android:text="Sáb" />
