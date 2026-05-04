@@ -59,7 +59,7 @@ public class NotificacoesFragment extends Fragment {
         idPaciente = prefs.getInt("id_usuario", 0);
         Log.d("DEBUG", "ID: " + idPaciente);
 
-        adapter = new NotificacaoAdapter(new ArrayList<>(), notificacao -> {
+        adapter = new NotificacaoAdapter(requireContext(), new ArrayList<>(), notificacao -> {
             marcarComoLida(notificacao.getId_notificacao());
         });
 

@@ -51,7 +51,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="16dp">
+                android:padding="16dp"
+                android:background="@color/boxBg">
 
                 <!-- Email -->
                 <LinearLayout
@@ -169,7 +170,7 @@
             android:text="@string/sair_Btn"
             android:fontFamily="@font/roboto_bold"
             android:textColor="@color/white"
-            android:backgroundTint="@color/secundariaEscuro"/>
+            android:backgroundTint="@color/secundariaClaro"/>
 
     </LinearLayout>
 

@@ -1,5 +1,6 @@
 package com.example.alinhamais.adapters;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +9,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.alinhamais.R;
@@ -25,11 +27,14 @@ public class NotificacaoAdapter extends RecyclerView.Adapter<NotificacaoAdapter.
 
     private OnItemClickListener listener;
 
+    private  Context context;
+
     public interface OnItemClickListener {
         void onClick(NotificacaoResponse notificacao);
     }
 
-    public NotificacaoAdapter(List<NotificacaoResponse> lista, OnItemClickListener listener) {
+    public NotificacaoAdapter(Context context, List<NotificacaoResponse> lista, OnItemClickListener listener) {
+        this.context = context;
         this.lista = lista;
         this.listener = listener;
     }
@@ -58,18 +63,17 @@ public class NotificacaoAdapter extends RecyclerView.Adapter<NotificacaoAdapter.
         // 🔥 CORES (lida vs nao_lida)
         if ("nao_lida".equals(n.getStatus())) {
 
-            holder.cardView.setCardBackgroundColor(Color.parseColor("#3EBAD2"));
-
-            holder.titulo.setTextColor(Color.WHITE);
-            holder.mensagem.setTextColor(Color.WHITE);
+            holder.cardView.setCardBackgroundColor(ContextCompat.getColor(context, R.color.primariaClaro));
+            holder.titulo.setTextColor(ContextCompat.getColor(context, R.color.wb));
+            holder.mensagem.setTextColor(ContextCompat.getColor(context, R.color.wb));
             holder.data.setTextColor(Color.parseColor("#E0E0E0"));
 
         } else {
 
-            holder.cardView.setCardBackgroundColor(Color.WHITE);
+            holder.cardView.setCardBackgroundColor(ContextCompat.getColor(context, R.color.boxBg));
 
-            holder.titulo.setTextColor(Color.BLACK);
-            holder.mensagem.setTextColor(Color.BLACK);
+            holder.titulo.setTextColor(ContextCompat.getColor(context, R.color.bw));
+            holder.mensagem.setTextColor(ContextCompat.getColor(context, R.color.bw));
             holder.data.setTextColor(Color.DKGRAY);
         }
 

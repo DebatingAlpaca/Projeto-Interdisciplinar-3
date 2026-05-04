@@ -37,6 +37,7 @@
                 android:gravity="center_horizontal"
                 android:paddingBottom="20dp"
                 android:paddingHorizontal="20dp"
+                android:background="@color/boxBg"
                 >
                 <!-- Titulo Sobre Nós -->
                 <TextView
@@ -70,7 +71,7 @@
             android:layout_height="wrap_content"
             android:text="@string/Contatos_Btn"
             android:textColor="@color/white"
-            android:backgroundTint="@color/primariaEscuro"
+            android:backgroundTint="@color/primariaEE"
             android:layout_marginTop="10dp"/>
 
         <!-- Redes Sociais -->
@@ -84,7 +85,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:gravity="center">
+                android:gravity="center"
+                android:background="@color/boxBg">
 
                 <!-- Titulo Redes Sociais-->
                 <TextView

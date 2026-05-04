@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/cinzaMedio"
     android:paddingVertical="20dp"
     android:paddingHorizontal="10dp"
     tools:context=".LembreteInfoFragment">
@@ -17,13 +16,15 @@
 
         <!-- Imagem do lembrete -->
         <com.google.android.material.imageview.ShapeableImageView
-            android:layout_width="200dp"
+            android:layout_width="match_parent"
             android:layout_height="200dp"
-            android:layout_margin="10dp"
-            app:shapeAppearanceOverlay="@style/Custom_round_corners"
-            android:background="@drawable/teste"
+            app:shapeAppearanceOverlay="@drawable/custom_round_square_solid"
+            android:backgroundTint="@color/boxBg"
+            android:id="@+id/imgLembrete"
+            android:maxHeight="200dp"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter" />
 
-        />
 
         <!-- Titulo do Lembrete -->
         <TextView
@@ -40,9 +41,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:background="@drawable/custom_round_square"
+            android:background="@drawable/custom_round_square_solid"
             android:paddingVertical="20sp"
             android:paddingHorizontal="40dp"
+            android:backgroundTint="@color/boxBg"
             android:text="@string/curto_Lorem"
             style="@style/TextRegular"/>
 
@@ -56,19 +58,41 @@
             >
             <!-- Layout do streak do dia-->
             <LinearLayout
-                android:id="@+id/streakDia"
+                android:id="@+id/streakCheck"
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
-                android:background="@drawable/custom_round_square"
+                android:background="@drawable/custom_round_square_solid"
+                android:backgroundTint="@color/boxBg"
                 android:layout_gravity="center"
-                android:gravity="center"
+                android:gravity="center_vertical"
                 android:paddingHorizontal="10dp"
                 android:orientation="horizontal"
-                android:weightSum="7"
                 android:layout_weight="3"
                 >
+                
+                <ImageView
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:maxWidth="70dp"
+                    android:adjustViewBounds="true"
+                    android:scaleType="fitCenter"
+                    android:background="@drawable/fogo_vazio"
+                    />
+                
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="20"
+                    android:textSize="50sp"
+                    android:textColor="@color/bw"
+                    android:layout_marginHorizontal="10dp"/>
 
-                <!-- Os circulos vão aqui dependendo de quantas notificacoes tem para aquele lembrete por dia -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Complete o exercicio e continue com sua Sequência!"
+                    android:textSize="15sp"/>
+
 
             </LinearLayout>
 
@@ -76,7 +100,9 @@
                 android:layout_width="100dp"
                 android:layout_height="80dp"
                 android:layout_weight="1"
-                android:background="@drawable/custom_round_square"
+                android:backgroundTint="@color/boxBg"
+
+                android:background="@drawable/custom_round_square_solid"
                 android:button="@drawable/custom_checkbox"
                 />
 
@@ -89,7 +115,8 @@
             android:layout_width="match_parent"
             android:layout_height="100dp"
             android:layout_margin="10dp"
-            android:background="@drawable/custom_round_square"
+            android:background="@drawable/custom_round_square_solid"
+            android:backgroundTint="@color/boxBg"
             android:layout_gravity="center"
             android:gravity="center"
             android:paddingHorizontal="10dp"
@@ -188,4 +215,4 @@
 
 
 
-</androidx.core.widget.NestedScrollView>
+</ScrollView>

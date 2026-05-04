@@ -12,8 +12,10 @@ import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -31,12 +33,13 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class LembretesFragment extends Fragment {
+public class LembretesFragment extends Fragment implements LembreteAdapter.OnItemClickListener {
 
     private RecyclerView recycler;
     private LembreteAdapter adapter;
     private String token;
     private int idPaciente;
+
     private static final String BASE_URL =
             "https://projeto-interdisciplinar-3.onrender.com";
 
@@ -81,6 +84,18 @@ public class LembretesFragment extends Fragment {
 
 
         return view;
+    }
+
+    //quando clicar em um dos adapters abre o fragment de info dos lembretes
+    @Override
+    public void onItemClick(int position) {
+        Fragment infoFragment = new LembreteInfoFragment();
+
+        getParentFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragmentsFrame, infoFragment)
+                .addToBackStack(null)
+                .commit();
     }
 
     private void pedirPermissaoNotificacao() {
@@ -181,4 +196,6 @@ public class LembretesFragment extends Fragment {
                     }
                 });
     }
+
+
 }

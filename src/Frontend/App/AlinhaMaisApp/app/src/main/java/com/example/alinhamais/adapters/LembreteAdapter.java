@@ -8,6 +8,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -27,16 +29,23 @@ public class LembreteAdapter extends
         void onToggle(LembreteResponse lembrete, boolean ativo);
     }
 
+    public interface OnItemClickListener {
+        void onItemClick(int position);
+    }
+
+
+    private OnItemClickListener listenerClick;
     private final List<LembreteResponse> lista;
     private final Context context;
     private final OnToggleListener listener;
     private final String baseUrl;
+    
 
-    private LembretesFragment parentFragment;
 
-    public LembreteAdapter(LembretesFragment fragment, Context context, List<LembreteResponse> lista,
+    public LembreteAdapter(OnItemClickListener listenerClick, Context context, List<LembreteResponse> lista,
                            String baseUrl, OnToggleListener listener) {
-        this.parentFragment = fragment;
+
+        this.listenerClick = listenerClick;
         this.context  = context;
         this.lista    = lista;
         this.baseUrl  = baseUrl;
@@ -57,6 +66,8 @@ public class LembreteAdapter extends
         LembreteResponse l = lista.get(position);
 
         holder.tvTitulo.setText(l.getTitulo());
+
+        holder.itemView.setOnClickListener(v -> listenerClick.onItemClick(position));
 
         if (l.getDescricao() != null && !l.getDescricao().isEmpty()) {
             holder.tvDescricao.setText(l.getDescricao());
@@ -106,16 +117,7 @@ public class LembreteAdapter extends
             listener.onToggle(l, isChecked);
         });
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-                parentFragment.getChildFragmentManager().beginTransaction()
-                        .add(R.id.fragmentsFrame, new LembreteInfoFragment())
-                        .addToBackStack(null)
-                        .commit();
-            }
-        });
     }
 
     @Override
