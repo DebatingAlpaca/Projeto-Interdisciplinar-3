@@ -34,7 +34,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:id="@+id/notificacaoTab"
-                android:icon="@drawable/sem_notificacao"
+                android:icon="@drawable/com_notificacao"
                 android:text="@string/notificao_Tab"
                 />
 

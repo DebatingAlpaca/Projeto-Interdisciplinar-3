@@ -73,10 +73,10 @@
 
                     <ImageButton
                         android:id="@+id/btnEditEmail"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="?attr/selectableItemBackgroundBorderless"
-                        android:src="@android:drawable/ic_menu_edit"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:background="@drawable/lapis"
+                        android:backgroundTint="@color/bw"
                         android:contentDescription="@string/botao_editar_ImgD"/>
 
                 </LinearLayout>
@@ -100,10 +100,10 @@
 
                     <ImageButton
                         android:id="@+id/btnEditTelefone"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="?attr/selectableItemBackgroundBorderless"
-                        android:src="@android:drawable/ic_menu_edit"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:background="@drawable/lapis"
+                        android:backgroundTint="@color/bw"
                         android:contentDescription="@string/botao_editar_ImgD"
                     />
 
@@ -129,10 +129,10 @@
 
                     <ImageButton
                         android:id="@+id/btnEditDataNascimento"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="?attr/selectableItemBackgroundBorderless"
-                        android:src="@android:drawable/ic_menu_edit"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:background="@drawable/lapis"
+                        android:backgroundTint="@color/bw"
                         android:contentDescription="@string/botao_editar_ImgD"/>
 
                 </LinearLayout>
@@ -148,7 +148,7 @@
                     <TextView
                         android:id="@+id/tvIdLogin"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="30dp"
                         android:textSize="14sp"
                         android:fontFamily="@font/roboto_medium"
                         android:text="@string/codigo_de_acesso_PH"/>

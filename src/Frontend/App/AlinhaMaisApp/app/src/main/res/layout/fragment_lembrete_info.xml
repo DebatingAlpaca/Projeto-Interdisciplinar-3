@@ -23,9 +23,12 @@
             android:gravity="center">
 
             <ImageButton
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:background="@drawable/circulo"/>
+                android:id="@+id/btnVoltar"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@drawable/voltar"
+                android:backgroundTint="@color/primariaEE"
+                android:layout_gravity="end"/>
 
             <!-- Imagem do lembrete -->
             <com.google.android.material.imageview.ShapeableImageView

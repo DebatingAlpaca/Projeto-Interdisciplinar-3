@@ -5,7 +5,9 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -23,19 +25,15 @@ import com.example.alinhamais.models.StreakViewModel;
 
 public class LembreteInfoFragment extends Fragment {
 
-    private TextView tvTitulo;
-    private TextView tvDescricao;
-    private ImageView imgLembrete;
 
     private int lembreteId, dayOfWeek;
     private CheckBox checkBox;
-    private TextView streakNum;
+    private TextView tvDescricao, tvTitulo, streakNum, streakTxt;
     private StreakViewModel viewModel;
-    private ImageView fogo;
-    private TextView streakTxt;
     private static final String baseUrl = "https://projeto-interdisciplinar-3.onrender.com";
 
-    private ImageView imgSeg, imgTer, imgQua, imgQui, imgSex, imgSab, imgDom;
+    private ImageView imgLembrete, fogo, imgSeg, imgTer, imgQua, imgQui, imgSex, imgSab, imgDom;
+    ImageButton btnVoltar;
 
 
     @Nullable
@@ -59,6 +57,7 @@ public class LembreteInfoFragment extends Fragment {
         imgSab = view.findViewById(R.id.tv_dia_sab);
         imgDom = view.findViewById(R.id.tv_dia_dom);
 
+        btnVoltar = view.findViewById(R.id.btnVoltar);
 
         //Infos
         tvDescricao = view.findViewById(R.id.tvDescricaoLembrete);
@@ -149,6 +148,16 @@ public class LembreteInfoFragment extends Fragment {
                 }
             });
 
+
+            //botao de voltar
+        btnVoltar.setOnClickListener(v -> {
+            Fragment destination = new LembretesFragment();
+            getParentFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.fragmentsFrame, destination)
+                    .addToBackStack(null)
+                    .commit();
+        });
 
 
     }
