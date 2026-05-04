@@ -22,6 +22,11 @@
             android:orientation="vertical"
             android:gravity="center">
 
+            <ImageButton
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:background="@drawable/circulo"/>
+
             <!-- Imagem do lembrete -->
             <com.google.android.material.imageview.ShapeableImageView
                 android:layout_width="match_parent"

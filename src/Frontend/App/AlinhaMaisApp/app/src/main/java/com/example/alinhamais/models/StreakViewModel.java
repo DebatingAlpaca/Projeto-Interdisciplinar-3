@@ -41,6 +41,7 @@ public class StreakViewModel extends ViewModel {
             prefs.edit()
                     .putInt("counter_" + itemId, newValue)
                     .putString("date_" + itemId, getTodayDate())
+                    .putString("last_check_date_" + itemId, getTodayDate())
                     .apply();
         }
     }
